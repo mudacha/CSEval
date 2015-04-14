@@ -88,10 +88,10 @@ function barGraph()
 	document.write("</div></td></tr>");
 	document.write("<table align='center'><tr>");
 	document.write("<td colspan = '9'>");
-	document.write("<input type='image' src='images/Arrows-Back-icon.png' width ='20px' height='20px' onmousedown=leftClick() onmouseup=endLeftClick() id = 'leftclick'/></td>");
-	document.write("<td><input type='image' src='images/Very-Basic-Plus-icon.png' width ='20px' height='20px'  onmousedown=zoomIn() onmouseup=endZoomIn() id = 'zoomin'/></td>");
-	document.write("<td><input type='image' src='images/Very-Basic-Minus-icon.png' width ='20px' height='20px' onmousedown=zoomOut() onmouseup=endZoomOut() id = 'zoomout'/></td>");
-	document.write("<td><input type='image' src='images/Arrows-Back-greater-than.png' width ='20px' height='20px' onmousedown=rightClick() onmouseup=endRightClick() id = 'rightclick' /></td>");
+	document.write("<input type='image' src='images/Arrows-Back-icon.png' width ='20px' height='20px' onmousedown=leftClick() onmouseup=endLeftClick() ondragend=endLeftClick() id = 'leftclick'/></td>");
+	document.write("<td><input type='image' src='images/Very-Basic-Plus-icon.png' width ='20px' height='20px'  onmousedown=zoomIn() onmouseup=endZoomIn() ondragend=endZoomIn() id = 'zoomin'/></td>");
+	document.write("<td><input type='image' src='images/Very-Basic-Minus-icon.png' width ='20px' height='20px' onmousedown=zoomOut() onmouseup=endZoomOut() ondragend=endZoomOut() id = 'zoomout'/></td>");
+	document.write("<td><input type='image' src='images/Arrows-Back-greater-than.png' width ='20px' height='20px' onmousedown=rightClick() onmouseup=endRightClick() ondragend=endRightClick() id = 'rightclick' /></td>");
 	document.write("</tr></table>");
 	
 	//LEGEND FOR MAIN TABLE
