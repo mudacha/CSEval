@@ -56,7 +56,8 @@ function getAnswerLength(answerCount)
 //ESSAY QUERY FUNCTION*************************************************************************************************************************************************
 function essayQuery(crn, semester, year)
 {
-	jQuery.getJSON('/misc/weber/CSEvals/essayAnswers.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
+    //jQuery.getJSON('/misc/weber/CSEvals/essayAnswers.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
+    jQuery.getJSON('EssayAnswers.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data)
 	{
 		var questionsAndResponses = [];
 		
@@ -162,7 +163,8 @@ function mainQuery(crn, semester, year)
 {
 	$.ajax(
 	{
-		url: '/misc/weber/CSEvals/AnswerCount.cfm?crn='+crn+'&semester='+semester+'&year='+year,
+	    //url: '/misc/weber/CSEvals/AnswerCount.cfm?crn='+crn+'&semester='+semester+'&year='+year,
+	    url: 'AnswerCount.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year,
 		type: "GET",
 		dataType:"json",
 		success: function(data)
@@ -292,7 +294,8 @@ function titleQuery(crn,semester,year)
 {
 	$.ajax(
 	{
-		url: '/misc/weber/CSEvals/CrnDetails.cfm?crn='+crn+'&semester='+semester+'&year='+year,
+	    //url: '/misc/weber/CSEvals/CrnDetails.cfm?crn='+crn+'&semester='+semester+'&year='+year,
+	    url: 'CrnDetails.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year,
 		type: "GET",
 		dataType: "json",
 		success: function (data) 
@@ -324,7 +327,8 @@ function topQuery(crn,semester,year)
 {
 	$("#StatisticsWrapper").hide();
 	
-	jQuery.getJSON('/misc/weber/CSEvals/CrnStatistics.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
+    //jQuery.getJSON('/misc/weber/CSEvals/CrnStatistics.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
+	jQuery.getJSON('CrnStatistics.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data)
 	{
 		var keyValPair = toKeyValPair(data.COLUMNS, String(data.DATA).split(','));
 
@@ -386,7 +390,8 @@ function detailsTop(crn,semester,year,clickedButton)
 	}
 	originalDiv.addClass("Already_Expanded");
 $("#top_detail").before('<p class="loadinggif">Calculating...</p></br><img class="loadinggif" src=".\\images\\ajax-loader.gif" "/>');
-	jQuery.get('/misc/weber/CSEvals/CrnStatistics.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
+    //jQuery.get('/misc/weber/CSEvals/CrnStatistics.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
+    jQuery.get('CrnStatistics.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data)
 	{
 		var statsTableString = 					 ' <table style="margin-top:0px">';
 		    statsTableString = statsTableString +' <tbody>';
@@ -397,7 +402,8 @@ $("#top_detail").before('<p class="loadinggif">Calculating...</p></br><img class
 		{
 			var crnStatistics2 = toKeyValPair(data.COLUMNS, String(data.DATA).split(','));
 
-			jQuery.get('/misc/weber/CSEvals/ScoreByCategory.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data2) 
+		    //jQuery.get('/misc/weber/CSEvals/ScoreByCategory.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data2) 
+		    jQuery.get('ScoreByCategory.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data2)
 			{
 				statsTableString = statsTableString + ''
 				$.each(data2.DATA, function(i,array2) 
@@ -521,7 +527,8 @@ expanderDiv.before('<span class="loadinggif">Calculating...</span><img class="lo
 
 	$.ajax(
 	{
-		url:("/misc/weber/CSEvals/QuestionDetails.cfm?crn="+crn+"&semester="+semester+"&year="+year+"&questionID="+questionId),
+	    //url:("/misc/weber/CSEvals/QuestionDetails.cfm?crn="+crn+"&semester="+semester+"&year="+year+"&questionID="+questionId),
+	    url: ("QuestionDetails.cshtml?crn=" + crn + "&semester=" + semester + "&year=" + year + "&questionID=" + questionId),
 		type:"GET",
 		dataType:"json",
 		success: function (data) 

@@ -116,7 +116,8 @@ window.onload = (function()
 		//}
 		
 	}
-	jQuery.get('https://chitester1dev.weber.edu:6838/misc/weber/CSEvals/ProfessorsWithAnswers.cfm?dept='+dept, function(data) 
+    //jQuery.get('https://chitester1dev.weber.edu:6838/misc/weber/CSEvals/ProfessorsWithAnswers.cfm?dept='+dept, function(data) 
+    jQuery.get('./ProfessorsWithAnswers.cshtml?dept=' + dept, function (data)
 	{	//option.innerHTML = 'Select and Instructor';
 		//select.appendChild(option);
 		for (var i = 0; i < data.DATA.length; i++) 
@@ -153,7 +154,23 @@ window.onload = (function()
 
 
 
-
+function getSemesterNum(semesterName)
+{
+    switch(semesterName)
+    {
+        case "Fall":
+            return 2;
+            break;
+        case "Summer":
+            return 1;
+            break;
+        case "Spring":
+            return 3;
+            break;
+        default:
+            return 1;
+    }
+}
 
 
 
@@ -202,7 +219,8 @@ window.onload = (function()
 			
 		}	*/
 		//}
-		jQuery.get('https://chitester1dev.weber.edu:6838/misc/weber/CSEvals/YearsTaught.cfm?InstructorID='+InstructID, function(YEARS)
+	    //jQuery.get('https://chitester1dev.weber.edu:6838/misc/weber/CSEvals/YearsTaught.cfm?InstructorID='+InstructID, function(YEARS)
+	    jQuery.get('./YearsTaught.cshtml?InstructorID=' + InstructID, function (YEARS)
 			{
 					
 					var yearCheck = new Array();
@@ -250,8 +268,13 @@ window.onload = (function()
 						var option = document.createElement("option");
 
 						//option.value = getCorrectYear(yearCheck[n],semesterCheck[n]);
-						option.value = combined[n].substring(0,4);
-						//alert(combined[n].substring(0,4));
+
+					    //option.value = combined[n].substring(0, 4);
+						var semesterArray = combined[n].split(/\s+/);
+						var semesterNum = semesterArray[1];
+						option.value = semesterArray[0] + " " + getSemesterNum(semesterNum);
+
+					    //alert(combined[n].substring(0,4));
 						//option.innerHTML = getCorrectYear(yearCheck[n],semesterCheck[n]) + " " + semName(semesterCheck[n]);	//getCorrectYear(yearOption, semester);
 						option.innerHTML = combined[n];
 						
@@ -302,7 +325,8 @@ Link class crn to class breakdown class.
 function getData() {
 	//parse url and get data here
 	$("#Anchor").before('<p class="loadinggif">Calculating...</p></br><img class="loadinggif" src=".\\images\\ajax-loader.gif" "/>');
-	$.get('https://chitester1dev.weber.edu:6838/misc/weber/CSEvals/ClassesTaught.cfm?InstructorID='+InstructID+'&year='+year, function(data) {
+    //$.get('https://chitester1dev.weber.edu:6838/misc/weber/CSEvals/ClassesTaught.cfm?InstructorID='+InstructID+'&year='+year, function(data) {
+	$.get('./ClassesTaught.cshtml?InstructorID=' + InstructID + '&year=' + year, function (data) {
 	
 
 		/*variables for semester and year for the header to the table*/
