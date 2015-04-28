@@ -3,5 +3,4 @@
         string json = null;
         var departments = EvalSystem.EvalSystemDB.GetDepartments();
         json = EvalSystem.DepartmentModel.ToJsonString(departments);
-    }
 }@Html.Raw(@json)
