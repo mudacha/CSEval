@@ -587,5 +587,42 @@ namespace EvalSystem
             }
 
         }
+        
+        public static DepartmentModel GetDepartments()
+        {
+            SqlConnection connection = GetConnection();
+
+            DepartmentModel departments = null;
+            string selectStatement = "SELECT [code],[name] FROM [CSEVAL].[dbo].[Departments] HERE [collegeCode] > '' and [code] != '0000'  and [code] != 'CE01' and [code] != '0020'  order by [code] asc";    
+
+            SqlCommand command = new SqlCommand(selectStatement, connection);
+            try
+            {
+                connection.Open();
+                SqlDataReader reader = command.ExecuteReader();
+                departments = new DepartmentModel();
+                while (reader.Read())
+                {
+                    var data = new DepartmentModel.Data();
+                    data.code = Convert.ToInt32(reader["CODE"]);
+                    data.name = reader["NAME"].ToString();
+                    departments.DATA.Add(data);
+                }
+
+                return departments;
+            }
+
+            catch (SqlException ex)
+            {
+                return null;
+            }
+
+
+            finally
+            {
+                connection.Close();
+            }
+
+        }
     }
 }
