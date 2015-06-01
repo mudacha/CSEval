@@ -51,40 +51,50 @@ function getAnswerLength(answerCount,currentTotal) {
 function essayQuery(element,crn, semester, year) {
     //jQuery.getJSON('/misc/weber/CSEvals/essayAnswers.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
     jQuery.getJSON('EssayAnswers.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data) {
-        var questionsAndResponses = [];
 
-        $.each(data.DATA, function (i, array) {
-            var dataArray = toKeyValPair(data.COLUMNS, String(array).split(','));	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
-            if (!(dataArray['QUESTION'] in questionsAndResponses)) {
-                questionsAndResponses[dataArray['QUESTION']] = [];
-            }
-            questionsAndResponses[dataArray['QUESTION']].push(dataArray['ANSWER']);
+        try
+        {
+            var questionsAndResponses = [];
 
-        });
-
-
-        var eQuestions = "";
-        printQuestion = 0;
-        for (var question in questionsAndResponses) {
-            var tempArray = questionsAndResponses[question];
-            eQuestions += "<div class='question_box'><table class='essay_table_settings'><tr><td style='vertical-align:text-top; text-align:right'> <img class = 'question_image_box' src = 'images/colorItemBackground.png'> " + (printQuestion + 1) + ".  </td><td></td><td align='left'>" + question + "</td></tr>";
-
-            for (var responses = 0; responses < tempArray.length; responses++) {
-
-                var noResponse = "";
-
-                if (tempArray[responses] == "No Response") {
-
-                    noResponse = "font-style:italic";
-
+            $.each(data.DATA, function (i, array) {
+                var dataArray = toKeyValPair(data.COLUMNS, String(array).split(','));	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
+                if (!(dataArray['QUESTION'] in questionsAndResponses)) {
+                    questionsAndResponses[dataArray['QUESTION']] = [];
                 }
-                eQuestions += "<tr><td style='font-weight:normal; vertical-align:text-bottom; text-align:right'>&nbsp;&nbsp;" + (responses + 1) + "</td><td align='right'></td><td align='left' class='essay_responses' style='" + noResponse + "'><pre>" + tempArray[responses] + "</pre></td></tr>";
+                questionsAndResponses[dataArray['QUESTION']].push(dataArray['ANSWER']);
+
+            });
+
+
+            var eQuestions = "";
+            printQuestion = 0;
+            for (var question in questionsAndResponses) {
+                var tempArray = questionsAndResponses[question];
+                eQuestions += "<div class='question_box'><table class='essay_table_settings'><tr><td style='vertical-align:text-top; text-align:right'> <img class = 'question_image_box' src = 'images/colorItemBackground.png'> " + (printQuestion + 1) + ".  </td><td></td><td align='left'>" + question + "</td></tr>";
+
+                for (var responses = 0; responses < tempArray.length; responses++) {
+
+                    var noResponse = "";
+
+                    if (tempArray[responses] == "No Response") {
+
+                        noResponse = "font-style:italic";
+
+                    }
+                    eQuestions += "<tr><td style='font-weight:normal; vertical-align:text-bottom; text-align:right'>&nbsp;&nbsp;" + (responses + 1) + "</td><td align='right'></td><td align='left' class='essay_responses' style='" + noResponse + "'><pre>" + tempArray[responses] + "</pre></td></tr>";
+                }
+                eQuestions += "</table></div>";
+                printQuestion++;
             }
-            eQuestions += "</table></div>";
-            printQuestion++;
+            $(element).find("#EssayWrapper").append(eQuestions);
+            essayQueryComplete(element, true);
         }
-        $(element).find("#EssayWrapper").append(eQuestions);
-        essayQueryComplete(element, true);
+        catch (thrownError) {
+            essayQueryComplete(element, false);
+        }
+    }, function (error) {
+
+        essayQueryComplete(element, false);
     });
 }
 //END ESSAY QUERY FUNCTION*********************************************************************************************************************************************
@@ -98,140 +108,148 @@ function mainQuery(element,crn, semester, year) {
 	    type: "GET",
 	    dataType: "json",
 	    success: function (data) {
-	        var currentQuestion = " ";
-	        var currentQuestionID;
-	        var currentQuestionSequence;
-	        var finishedQuestions = [];
-	        var currentSD = 0;
-	        var currentD = 0;
-	        var currentN = 0;
-	        var currentA = 0;
-	        var currentSA = 0;
-	        var currentNA = 0;
-	        var currentTotal = 0;
-	        var currentLengths = [];
-	        var printedQuestions = [];
-	        var crnStatistics = [];
-	        var questionCollapserId = 0;
-	        var totalQuestions = 0;
-	        var questionJSON = {};
-	        var barHeight = 30;
-	        var totalRespondents = 0;
-	        $.each(data.DATA, function (i, array) {
-	            var dataArray = toKeyValPair(data.COLUMNS, String(array).split(','));	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
-	            //$.each(dataArray, function(i,array)
-	            //{
-	            //	document.write(i + ": " + array + "<br />");
-	            //});
-	            totalRespondents = dataArray['STUDENT COUNT'];
-	            window.totalRespondents[element.id] = totalRespondents;
-	            //window.currentQuestion = dataArray['QUESTION'];
-	            //window.currentQuestionID = dataArray['QUESTIONID'];
-	            //window.currentQuestionSequence = dataArray['SEQUENCE'];
-	            currentQuestion = dataArray['QUESTION'];
-	            currentQuestionID = dataArray['QUESTIONID'];
-	            currentQuestionSequence = dataArray['SEQUENCE'];
+	        try {
+	            var currentQuestion = " ";
+	            var currentQuestionID;
+	            var currentQuestionSequence;
+	            var finishedQuestions = [];
+	            var currentSD = 0;
+	            var currentD = 0;
+	            var currentN = 0;
+	            var currentA = 0;
+	            var currentSA = 0;
+	            var currentNA = 0;
+	            var currentTotal = 0;
+	            var currentLengths = [];
+	            var printedQuestions = [];
+	            var crnStatistics = [];
+	            var questionCollapserId = 0;
+	            var totalQuestions = 0;
+	            var questionJSON = {};
+	            var barHeight = 30;
+	            var totalRespondents = 0;
+	            $.each(data.DATA, function (i, array) {
+	                var dataArray = toKeyValPair(data.COLUMNS, String(array).split(','));	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
+	                //$.each(dataArray, function(i,array)
+	                //{
+	                //	document.write(i + ": " + array + "<br />");
+	                //});
+	                totalRespondents = dataArray['STUDENT COUNT'];
+	                window.totalRespondents[element.id] = totalRespondents;
+	                //window.currentQuestion = dataArray['QUESTION'];
+	                //window.currentQuestionID = dataArray['QUESTIONID'];
+	                //window.currentQuestionSequence = dataArray['SEQUENCE'];
+	                currentQuestion = dataArray['QUESTION'];
+	                currentQuestionID = dataArray['QUESTIONID'];
+	                currentQuestionSequence = dataArray['SEQUENCE'];
 	            
-	            $.each(data.DATA, function (i, innerArray) {
-	                var innerDataArray = toKeyValPair(data.COLUMNS, String(innerArray).split(','));	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
+	                $.each(data.DATA, function (i, innerArray) {
+	                    var innerDataArray = toKeyValPair(data.COLUMNS, String(innerArray).split(','));	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
 
-	                if (currentQuestion == innerDataArray['QUESTION'] && finishedQuestions.indexOf(currentQuestion + " - " + innerDataArray['ANSWERS'].toLocaleLowerCase()) == -1) {
-	                    switch (innerDataArray['ANSWERS'].toLocaleLowerCase()) {
-	                        case 'strongly disagree':
-	                        case 'very poor':
-	                            currentSD += +innerDataArray['ANSWER COUNT'];
-	                            currentTotal += +innerDataArray['ANSWER COUNT'];
-	                            break;
-	                        case 'disagree':
-	                        case 'poor':
-	                            currentD += +innerDataArray['ANSWER COUNT'];
-	                            currentTotal += +innerDataArray['ANSWER COUNT'];
-	                            break;
-	                        case 'neutral':
-	                        case 'average':
-	                            currentN += +innerDataArray['ANSWER COUNT'];
-	                            currentTotal += +innerDataArray['ANSWER COUNT'];
-	                            break;
-	                        case 'agree':
-	                        case 'good':
-	                            currentA += +innerDataArray['ANSWER COUNT'];
-	                            currentTotal += +innerDataArray['ANSWER COUNT'];
-	                            break;
-	                        case 'strongly agree':
-	                        case 'excellent':
-	                            currentSA += +innerDataArray['ANSWER COUNT'];
-	                            currentTotal += +innerDataArray['ANSWER COUNT'];
-	                            break;
-	                        case 'n/a':
-	                            currentNA += +innerDataArray['ANSWER COUNT'];
-	                            currentTotal += +innerDataArray['ANSWER COUNT'];
-	                            break;
+	                    if (currentQuestion == innerDataArray['QUESTION'] && finishedQuestions.indexOf(currentQuestion + " - " + innerDataArray['ANSWERS'].toLocaleLowerCase()) == -1) {
+	                        switch (innerDataArray['ANSWERS'].toLocaleLowerCase()) {
+	                            case 'strongly disagree':
+	                            case 'very poor':
+	                                currentSD += +innerDataArray['ANSWER COUNT'];
+	                                currentTotal += +innerDataArray['ANSWER COUNT'];
+	                                break;
+	                            case 'disagree':
+	                            case 'poor':
+	                                currentD += +innerDataArray['ANSWER COUNT'];
+	                                currentTotal += +innerDataArray['ANSWER COUNT'];
+	                                break;
+	                            case 'neutral':
+	                            case 'average':
+	                                currentN += +innerDataArray['ANSWER COUNT'];
+	                                currentTotal += +innerDataArray['ANSWER COUNT'];
+	                                break;
+	                            case 'agree':
+	                            case 'good':
+	                                currentA += +innerDataArray['ANSWER COUNT'];
+	                                currentTotal += +innerDataArray['ANSWER COUNT'];
+	                                break;
+	                            case 'strongly agree':
+	                            case 'excellent':
+	                                currentSA += +innerDataArray['ANSWER COUNT'];
+	                                currentTotal += +innerDataArray['ANSWER COUNT'];
+	                                break;
+	                            case 'n/a':
+	                                currentNA += +innerDataArray['ANSWER COUNT'];
+	                                currentTotal += +innerDataArray['ANSWER COUNT'];
+	                                break;
+	                        }
+	                        finishedQuestions.push(window.currentQuestion + " - " + innerDataArray['ANSWERS'].toLocaleLowerCase());
 	                    }
-	                    finishedQuestions.push(window.currentQuestion + " - " + innerDataArray['ANSWERS'].toLocaleLowerCase());
+	                });
+
+	                if (printedQuestions.indexOf(currentQuestion) == -1) {
+	                    questionCollapserId += 1;
+	                    totalQuestions++;
+	                    currentLengths = getPixelLengthBasic(currentSD, currentD, currentN, currentA, currentSA, currentNA,currentTotal);
+	                    printedQuestions.push(currentQuestion);
+	                    $(element).find("#array").append('<p style="clear:both;">' + currentQuestion + " - " + currentSD + " - " + currentD + " - " + currentN + " - " + currentA + " - " + currentSA + " - " + currentTotal + "</p>");
+
+	                    var buildString = '<div class="question_box question_box_collapsed ' + questionCollapserId + '"><button id="' + questionCollapserId + '" class="button">↕</button><input type="hidden" class="hiddenQuestionID" value="' + currentQuestionID + '"/><div class="toggle">';
+	                    buildString += '<img class = "question_image_box" src = "images/colorItemBackground.png"><div class="question"><h4>' + currentQuestionSequence + ". " + currentQuestion + '</h4></div><div class="question_graph"> ';
+
+	                    currentLengths = normPixelLength(currentLengths);
+
+	                    buildString += '<img class="displaycolor" src = "images/colorStronglyDisagree.png" width="' + currentLengths[0] + 'px" height="' + barHeight + 'px" title="Strongly Disagree: ' + currentSD + '/' + currentTotal + '"> ';
+	                    buildString += '<img class="displaycolor" src = "images/colorDisagree.png" width="' + currentLengths[1] + 'px" height="' + barHeight + 'px" title="Disagree: ' + currentD + '/' + currentTotal + '"> ';
+	                    buildString += '<img class="displaycolor" src = "images/colorNeutral.png" width="' + currentLengths[2] + 'px" height="' + barHeight + 'px" title="Neutral: ' + currentN + '/' + currentTotal + '"> ';
+	                    buildString += '<img class="displaycolor" src = "images/colorAgree.png" width="' + currentLengths[3] + 'px" height="' + barHeight + 'px" title="Agree: ' + currentA + '/' + currentTotal + '"> ';
+	                    buildString += '<img class="displaycolor" src = "images/colorStronglyAgree.png" width="' + currentLengths[4] + 'px" height="' + barHeight + 'px" title="Strongly Agree: ' + currentSA + '/' + currentTotal + '"> ';
+	                    if (currentNA > 0) {
+	                        buildString += '<img class="displaycolor" src = "images/colorNA.png" width="' + currentLengths[5] + 'px" height="' + barHeight + 'px" title="N\/A: ' + currentNA + '/' + currentTotal + '"> ';
+	                    }
+
+	                    //					buildString += '<div class="graph_box graphStronglyDisagree" title="Strongly Disagree: '+window.currentSD+'/'+window.currentTotal+'"   style=" width:'+window.currentLengths[0]+'px;">';
+	                    //					buildString += '<div class="graph_box graphStronglyDisagree" title="Strongly Disagree: '+window.currentSD+'/'+window.currentTotal+'"   style=" width:'+window.currentLengths[0]+'px;">';
+	                    //buildString += '</div><div class="graph_box graphDisagree" title="Disagree: '+window.currentD+'/'+window.currentTotal+'"   style=" width:'+window.currentLengths[1]+'px;">';
+	                    //buildString += '</div><div class="graph_box graphNeutral" title="Neutral: '+window.currentN+'/'+window.currentTotal+'"   style=" width:'+window.currentLengths[2]+'px;">';
+	                    //buildString += '</div><div class="graph_box graphAgree" title="Agree: '+window.currentA+'/'+window.currentTotal+'"   style=" width:'+window.currentLengths[3]+'px;">';
+	                    //buildString += '</div><div class="graph_box graphStronglyAgree" title="Strongly Agree: '+window.currentSA+'/'+window.currentTotal+'"   style=" width:'+window.currentLengths[4]+'px;">';
+	                    buildString += '</div></div><table class="question_scores"><tr><td class="question_answers_collapsed">SD: ' + currentSD + '</td>';
+	                    buildString += '<td class="question_answers_collapsed">D: ' + currentD + '</td>';
+	                    buildString += '<td class="question_answers_collapsed">N: ' + currentN + '</td>';
+	                    buildString += '<td class="question_answers_collapsed">A: ' + currentA + '</td>';
+	                    buildString += '<td class="question_answers_collapsed">SA: ' + currentSA + '</td>';
+	                    if (currentNA > 0) {
+	                        buildString += '<td class="question_answers_collapsed">NA: ' + currentNA + '</td>';
+	                    }
+	                    buildString += '</tr></table><br/></div></div>';
+	                    buildString += '<!--' + currentQuestion + '-->'
+	                    buildString += '<div class="question_box question_box_expanded ' + questionCollapserId + '"></div>';
+	                    var q = {};
+	                    q[0] = currentQuestion;
+	                    q[1] = currentSD;
+	                    q[2] = currentD;
+	                    q[3] = currentN;
+	                    q[4] = currentA;
+	                    q[5] = currentSA;
+	                    q[6] = currentTotal;
+	                    q[7] = currentNA; //ADDED FOR NA
+	                    questionJSON[questionCollapserId] = q;
+	                    $(element).find("#questions_wrapper").append(buildString);
 	                }
+
+	                currentQuestion = " ";
+	                currentSD = 0;
+	                currentD = 0;
+	                currentN = 0;
+	                currentA = 0;
+	                currentSA = 0;
+	                currentNA = 0;
+	                currentTotal = 0;
 	            });
-
-	            if (printedQuestions.indexOf(currentQuestion) == -1) {
-	                questionCollapserId += 1;
-	                totalQuestions++;
-	                currentLengths = getPixelLengthBasic(currentSD, currentD, currentN, currentA, currentSA, currentNA,currentTotal);
-	                printedQuestions.push(currentQuestion);
-	                $(element).find("#array").append('<p style="clear:both;">' + currentQuestion + " - " + currentSD + " - " + currentD + " - " + currentN + " - " + currentA + " - " + currentSA + " - " + currentTotal + "</p>");
-
-	                var buildString = '<div class="question_box question_box_collapsed ' + questionCollapserId + '"><button id="' + questionCollapserId + '" class="button">↕</button><input type="hidden" class="hiddenQuestionID" value="' + currentQuestionID + '"/><div class="toggle">';
-	                buildString += '<img class = "question_image_box" src = "images/colorItemBackground.png"><div class="question"><h4>' + currentQuestionSequence + ". " + currentQuestion + '</h4></div><div class="question_graph"> ';
-
-	                currentLengths = normPixelLength(currentLengths);
-
-	                buildString += '<img class="displaycolor" src = "images/colorStronglyDisagree.png" width="' + currentLengths[0] + 'px" height="' + barHeight + 'px" title="Strongly Disagree: ' + currentSD + '/' + currentTotal + '"> ';
-	                buildString += '<img class="displaycolor" src = "images/colorDisagree.png" width="' + currentLengths[1] + 'px" height="' + barHeight + 'px" title="Disagree: ' + currentD + '/' + currentTotal + '"> ';
-	                buildString += '<img class="displaycolor" src = "images/colorNeutral.png" width="' + currentLengths[2] + 'px" height="' + barHeight + 'px" title="Neutral: ' + currentN + '/' + currentTotal + '"> ';
-	                buildString += '<img class="displaycolor" src = "images/colorAgree.png" width="' + currentLengths[3] + 'px" height="' + barHeight + 'px" title="Agree: ' + currentA + '/' + currentTotal + '"> ';
-	                buildString += '<img class="displaycolor" src = "images/colorStronglyAgree.png" width="' + currentLengths[4] + 'px" height="' + barHeight + 'px" title="Strongly Agree: ' + currentSA + '/' + currentTotal + '"> ';
-	                if (currentNA > 0) {
-	                    buildString += '<img class="displaycolor" src = "images/colorNA.png" width="' + currentLengths[5] + 'px" height="' + barHeight + 'px" title="N\/A: ' + currentNA + '/' + currentTotal + '"> ';
-	                }
-
-	                //					buildString += '<div class="graph_box graphStronglyDisagree" title="Strongly Disagree: '+window.currentSD+'/'+window.currentTotal+'"   style=" width:'+window.currentLengths[0]+'px;">';
-	                //					buildString += '<div class="graph_box graphStronglyDisagree" title="Strongly Disagree: '+window.currentSD+'/'+window.currentTotal+'"   style=" width:'+window.currentLengths[0]+'px;">';
-	                //buildString += '</div><div class="graph_box graphDisagree" title="Disagree: '+window.currentD+'/'+window.currentTotal+'"   style=" width:'+window.currentLengths[1]+'px;">';
-	                //buildString += '</div><div class="graph_box graphNeutral" title="Neutral: '+window.currentN+'/'+window.currentTotal+'"   style=" width:'+window.currentLengths[2]+'px;">';
-	                //buildString += '</div><div class="graph_box graphAgree" title="Agree: '+window.currentA+'/'+window.currentTotal+'"   style=" width:'+window.currentLengths[3]+'px;">';
-	                //buildString += '</div><div class="graph_box graphStronglyAgree" title="Strongly Agree: '+window.currentSA+'/'+window.currentTotal+'"   style=" width:'+window.currentLengths[4]+'px;">';
-	                buildString += '</div></div><table class="question_scores"><tr><td class="question_answers_collapsed">SD: ' + currentSD + '</td>';
-	                buildString += '<td class="question_answers_collapsed">D: ' + currentD + '</td>';
-	                buildString += '<td class="question_answers_collapsed">N: ' + currentN + '</td>';
-	                buildString += '<td class="question_answers_collapsed">A: ' + currentA + '</td>';
-	                buildString += '<td class="question_answers_collapsed">SA: ' + currentSA + '</td>';
-	                if (currentNA > 0) {
-	                    buildString += '<td class="question_answers_collapsed">NA: ' + currentNA + '</td>';
-	                }
-	                buildString += '</tr></table><br/></div></div>';
-	                buildString += '<!--' + currentQuestion + '-->'
-	                buildString += '<div class="question_box question_box_expanded ' + questionCollapserId + '"></div>';
-	                var q = {};
-	                q[0] = currentQuestion;
-	                q[1] = currentSD;
-	                q[2] = currentD;
-	                q[3] = currentN;
-	                q[4] = currentA;
-	                q[5] = currentSA;
-	                q[6] = currentTotal;
-	                q[7] = currentNA; //ADDED FOR NA
-	                questionJSON[questionCollapserId] = q;
-	                $(element).find("#questions_wrapper").append(buildString);
-	            }
-
-	            currentQuestion = " ";
-	            currentSD = 0;
-	            currentD = 0;
-	            currentN = 0;
-	            currentA = 0;
-	            currentSA = 0;
-	            currentNA = 0;
-	            currentTotal = 0;
-	        });
-	        mainQueryComplete(element, true);
+	            mainQueryComplete(element, true);
+	        }
+	        catch (thrownError) {
+	            mainQueryComplete(element, false);
+	        }
+	    },
+	    error: function (xhr, ajaxOptions, thrownError) {
+	        mainQueryComplete(element, false);
 	    }
 	});
 }
@@ -245,25 +263,35 @@ function titleQuery(element,crn, semester, year) {
 	    type: "GET",
 	    dataType: "json",
 	    success: function (data) {
-	        if (data.DATA == "") //IN THE EVENT TITLE DATA CANNOT BE RETRIEVED
-	        {
-	            $(element).find("#title_wrapper").append('<h2>Course Evaluation</h2>' + ' Semester ' + Semester + ' - CRN ' + CRN + ' - Year ' + Year);
-	            window.ClassName = 'CRN ' + CRN;
-	        }
-	        else				//RETREIVE AND UTILIZE TITLE DATA
-	        {
-	            $.each(data.DATA, function (i, array) {
-	                var dataArray = toKeyValPair(data.COLUMNS, String(array).split(','));	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
+	        try {
 
-	                window.ClassName = dataArray['CLASSSTRING'];
-	                if (dataArray['SEMESTERSTRING'] == "Summer" || dataArray['SEMESTERSTRING'] == "Fall") {
-	                    dataArray['YEAR'] -= 1; //Set the year back one
-	                }
-	                $(element).find("#title_wrapper").append('<h2>Course Evaluation</h2>' + dataArray['FIRSTNAME'] + ' ' + dataArray['LASTNAME'] + ' - ' + dataArray['CLASSSTRING'] + ' - CRN ' + dataArray['BANNERCRN'] + ' - ' + dataArray['SEMESTERSTRING'] + ' ' + dataArray['YEAR'] + '');
-	            });
+	            if (data.DATA == "") //IN THE EVENT TITLE DATA CANNOT BE RETRIEVED
+	            {
+	                $(element).find("#title_wrapper").append('<h2>Course Evaluation</h2>' + ' Semester ' + Semester + ' - CRN ' + CRN + ' - Year ' + Year);
+	                window.ClassName = 'CRN ' + CRN;
+	            }
+	            else				//RETREIVE AND UTILIZE TITLE DATA
+	            {
+	                $.each(data.DATA, function (i, array) {
+	                    var dataArray = toKeyValPair(data.COLUMNS, String(array).split(','));	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
+
+	                    window.ClassName = dataArray['CLASSSTRING'];
+	                    if (dataArray['SEMESTERSTRING'] == "Summer" || dataArray['SEMESTERSTRING'] == "Fall") {
+	                        dataArray['YEAR'] -= 1; //Set the year back one
+	                    }
+	                    $(element).find("#title_wrapper").append('<h2>Course Evaluation</h2>' + dataArray['FIRSTNAME'] + ' ' + dataArray['LASTNAME'] + ' - ' + dataArray['CLASSSTRING'] + ' - CRN ' + dataArray['BANNERCRN'] + ' - ' + dataArray['SEMESTERSTRING'] + ' ' + dataArray['YEAR'] + '');
+	                });
+	            }
+	            titleQueryComplete(element, true);
 	        }
-	        titleQueryComplete(element, true);
-	    }
+	        catch (thrownError) {
+	            titleQueryComplete(element, false);
+	        }
+	    },
+	    error: function (xhr, ajaxOptions, thrownError)
+	    {
+	        titleQueryComplete(element, false);
+        }
 	});
 }
 
@@ -272,38 +300,49 @@ function topQuery(element,crn, semester, year) {
 
     //jQuery.getJSON('/misc/weber/CSEvals/CrnStatistics.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
     jQuery.getJSON('CrnStatistics.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data) {
-        var keyValPair = toKeyValPair(data.COLUMNS, String(data.DATA).split(','));
+        try{
+            var keyValPair = toKeyValPair(data.COLUMNS, String(data.DATA).split(','));
 
-        crnStatistics = keyValPair['INSTRUCTORSEMESTERAVERAGE'];
-        var currentLengths = new Array(getPixelLength(keyValPair['CLASSSCORE']).toFixed(2), (400 - getPixelLength(keyValPair['CLASSSCORE']).toFixed(2)));
-        currentLengths = normPixelLength(currentLengths);
-        var tempString = '';
-        tempString = tempString + '<table id="topTable">';
-        tempString = tempString + '		<tbody><tr>';
-        tempString = tempString + '			<td></td>';
-        tempString = tempString + '			<td></td>';
-        tempString = tempString + '			<td></td>';
-        tempString = tempString + '			<td style="max-width:100px;text-align:center;font-size:12px;">Standard Deviation</td>';
-        tempString = tempString + '		</tr>';
-        tempString = tempString + '		<tr>';
-        tempString = tempString + '			<td class="bigger bolder" style="width: 300px;"><button class="tpbutton">↕</button><input type="hidden"/> Your Overall Score</td>';
-        tempString = tempString + '			<td class="bigger bolder" style="width: 60px">' + Number(keyValPair['CLASSSCORE']).toFixed(2) + '</td>';
-        //TOPLINE ON GRAPH
-        //tempString = tempString + '			<td><div class="container ticks"><div class="overall_ bigbar yellow ticks" style="width:'+getPixelLength(keyValPair['CLASSSCORE']).toFixed(2)+'px"></div></div></td>';
-        tempString = tempString + '	<td><div class="container"; style="position:relative"><img align="left" src = "images/colorTopBars.png" width="' + currentLengths[0] + 'px" height=40px"><img align="left" src = "images/colorTopBarBackground.png" width="' + currentLengths[1] + 'px" height=40px"><img style="position:absolute; top:0; left:0" src = "images/ticks.png"></div></td>';
+            crnStatistics = keyValPair['INSTRUCTORSEMESTERAVERAGE'];
+            var currentLengths = new Array(getPixelLength(keyValPair['CLASSSCORE']).toFixed(2), (400 - getPixelLength(keyValPair['CLASSSCORE']).toFixed(2)));
+            currentLengths = normPixelLength(currentLengths);
+            var tempString = '';
+            tempString = tempString + '<table id="topTable">';
+            tempString = tempString + '		<tbody><tr>';
+            tempString = tempString + '			<td></td>';
+            tempString = tempString + '			<td></td>';
+            tempString = tempString + '			<td></td>';
+            tempString = tempString + '			<td style="max-width:100px;text-align:center;font-size:12px;">Standard Deviation</td>';
+            tempString = tempString + '		</tr>';
+            tempString = tempString + '		<tr>';
+            tempString = tempString + '			<td class="bigger bolder" style="width: 300px;"><button class="tpbutton">↕</button><input type="hidden"/> Your Overall Score</td>';
+            tempString = tempString + '			<td class="bigger bolder" style="width: 60px">' + Number(keyValPair['CLASSSCORE']).toFixed(2) + '</td>';
+            //TOPLINE ON GRAPH
+            //tempString = tempString + '			<td><div class="container ticks"><div class="overall_ bigbar yellow ticks" style="width:'+getPixelLength(keyValPair['CLASSSCORE']).toFixed(2)+'px"></div></div></td>';
+            tempString = tempString + '	<td><div class="container"; style="position:relative"><img align="left" src = "images/colorTopBars.png" width="' + currentLengths[0] + 'px" height=40px"><img align="left" src = "images/colorTopBarBackground.png" width="' + currentLengths[1] + 'px" height=40px"><img style="position:absolute; top:0; left:0" src = "images/ticks.png"></div></td>';
 
-        tempString = tempString + '			<td style="width: 100px; text-align:center">' + Number(keyValPair['CLASSSTDEVIATION']).toFixed(2) + '</td>';
-        tempString = tempString + '		</tr>';
-        tempString = tempString + '	</tbody>';
-        tempString = tempString + ' </table>';
-        tempString = tempString + ' <div id="top_detail"></div>';
-        $(element).find("#StatisticsWrapper").prepend(tempString);
-        $(element).find("#StatisticsWrapper").slideDown(200);
-        $(element).find(".loadinggif").remove();
+            tempString = tempString + '			<td style="width: 100px; text-align:center">' + Number(keyValPair['CLASSSTDEVIATION']).toFixed(2) + '</td>';
+            tempString = tempString + '		</tr>';
+            tempString = tempString + '	</tbody>';
+            tempString = tempString + ' </table>';
+            tempString = tempString + ' <div id="top_detail"></div>';
+            $(element).find("#StatisticsWrapper").prepend(tempString);
+            $(element).find("#StatisticsWrapper").slideDown(200);
+            $(element).find(".loadinggif").remove();
+            
+            topQueryComplete(element, true);
+            var tpButton = $(element).find(".tpbutton").get(0);
+            detailsTop(element, crn, semester, year, tpButton);
+        }
+        catch (error)
+        {
+            topQueryComplete(element, false);
+        }
+        
+    }, function (reason) {
 
-        topQueryComplete(element, true);
-        var tpButton = $(element).find(".tpbutton").get(0);
-        detailsTop(element, crn, semester, year, tpButton);
+        topQueryComplete(element, false);
+        
     });
 }
 
@@ -765,12 +804,28 @@ function nextCrn()
         $('#loadingstatus').remove();
     }
 }
-
+function onErrorQueries(wrapperElement) {
+    wrapperElement["TOPQUERY"] = false;
+    wrapperElement["MAINQUERY"] = false;
+    wrapperElement["TOPDETAILS"] = false;
+    wrapperElement["ESSAYQUERY"] = false;
+    wrapperElement["TITLEQUERY"] = false;
+}
+function failedQueries(element) {
+    return !element["TOPQUERY"] && !element["TOPDETAILS"] && !element["TITLEQUERY"]
+           && !element["MAINQUERY"] && !element["ESSAYQUERY"];
+}
 function topQueryComplete(wrapperElement,passed)
 {
     if (!passed)
     {
         //execute failed event
+        onErrorQueries(wrapperElement);
+    }
+    if(failedQueries(wrapperElement))
+    {
+        nextCrn();
+        return;
     }
     wrapperElement["TOPQUERY"] = passed;
     if(checkCompletedAllQueries(wrapperElement))
@@ -786,6 +841,11 @@ function topDetailsComplete(wrapperElement, passed)
 {
     if (!passed) {
         //execute failed event
+        onErrorQueries(wrapperElement);
+    }
+    if (failedQueries(wrapperElement)) {
+        nextCrn();
+        return;
     }
     wrapperElement["TOPDETAILS"] = passed;
     if (checkCompletedAllQueries(wrapperElement)) {
@@ -799,6 +859,11 @@ function mainQueryComplete(wrapperElement, passed)
 {
     if (!passed) {
         //execute failed event
+        onErrorQueries(wrapperElement);
+    }
+    if (failedQueries(wrapperElement)) {
+        nextCrn();
+        return;
     }
     wrapperElement["MAINQUERY"] = passed;
     if (checkCompletedAllQueries(wrapperElement)) {
@@ -826,6 +891,11 @@ function titleQueryComplete(wrapperElement,passed)
 {
     if (!passed) {
         //execute failed event
+        onErrorQueries(wrapperElement);
+    }
+    if (failedQueries(wrapperElement)) {
+        nextCrn();
+        return;
     }
     wrapperElement["TITLEQUERY"] = passed;
     if (checkCompletedAllQueries(wrapperElement)) {
@@ -887,8 +957,11 @@ var barHeight = 30;
 
 CRN = getURLParameter('CRN');
 crnArray = CRN.split(',');
+
+
+
 currentCRNIndex = 0;
-//CRN = parseInt(getURLParameter('CRN'));
+    //CRN = parseInt(getURLParameter('CRN'));
 Semester = parseInt(getURLParameter('Semester'));
 Year = parseInt(getURLParameter('Year'));
 currentElement = {};
@@ -901,6 +974,29 @@ window.onload = (function () {
         addToReport(parseInt(crnArray[i]), Semester, Year);
     }
     */
+    errorCRN = [];
+
+    for (var i = 0; i < crnArray.length; i++) {
+        if (crnArray[i].length != 5) {
+            errorCRN.push(crnArray[i]);
+            crnArray.splice(i, 1);
+            i--;
+        }
+        else if (isNaN(crnArray[i])) {
+            errorCRN.push(crnArray[i]);
+            crnArray.splice(i, 1);
+            i--;
+        }
+
+    }
+
+    for (var e = 0; e < errorCRN.length; e++)
+    {
+        
+        $('#crnErrors').append(errorCRN[e] + ' is not a valid CRN <br/>');
+    }
+    
+
     var loadingStatus = document.createElement('div');
     loadingStatus.id = "loadingstatus";
     loadingStatus.innerHTML = '<p class="loadinggif">0 of ' + crnArray.length +' classes</p></br><img class="loadinggif" src=".\\images\\ajax-loader.gif" "/>';

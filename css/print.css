@@ -903,3 +903,7 @@ table.table_settings tbody tr td
   display:block;
   float:left;
 }
+
+.error {
+    display:none;
+}
