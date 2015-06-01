@@ -230,6 +230,7 @@ function mainQuery(element,crn, semester, year) {
 	                    q[6] = currentTotal;
 	                    q[7] = currentNA; //ADDED FOR NA
 	                    questionJSON[questionCollapserId] = q;
+	                    storedQuestions[crn] = questionJSON;
 	                    $(element).find("#questions_wrapper").append(buildString);
 	                }
 
@@ -504,7 +505,7 @@ function detailsQuery(element,crn, semester, year, questionId, clickedButton) {
 	        //resultString += '<p class="loadinggif">Calculating...</p></br><img class="loadinggif" src=".\\images\\ajax-loader.gif';
 	        //expanderDiv.append(resultString);
 	        //var connectionString = '';
-
+	        var questionJSON = storedQuestions[crn];
 	        var array = toKeyValPair(data.COLUMNS, String(data.DATA).split(','));
 	        var totalResponses = questionJSON[questionNumber][1] + questionJSON[questionNumber][2] + questionJSON[questionNumber][3] + questionJSON[questionNumber][4] + questionJSON[questionNumber][5] + questionJSON[questionNumber][7];
 	        var tableWidth;
@@ -569,7 +570,7 @@ function detailsQuery(element,crn, semester, year, questionId, clickedButton) {
 										((questionJSON[questionNumber][4]) / (totalResponses)) * totalBarLength,
 										((questionJSON[questionNumber][5]) / (totalResponses)) * totalBarLength,
 										((questionJSON[questionNumber][7]) / (totalResponses)) * totalBarLength);
-	        normPixelLength();
+	        normPixelLength(currentLengths);
 	        //				statsTableString = statsTableString + '	<td><div class="container"><div class="overall_bar littleTicks" style="width:'+getPixelLength(crnStatistics2['INSTRUCTORCLASSFIVEYEARAVERAGE']).toFixed(2)+'px"></div></div></td>';
 	        //resultString +='								<div class="colorStronglyDisagree" style="width:'+((questionJSON[questionNumber][1])/(questionJSON[questionNumber][6]))*totalBarLength+'px"></div>	';
 	        resultString += '								<img class="displaycolor" src = "images/colorStronglyDisagree.png" width="' + currentLengths[0] + 'px" height="' + barHeight + 'px" title="Strongly Disagree: ' + questionJSON[questionNumber][1] + '/' + totalResponses + '"> ';
@@ -615,7 +616,7 @@ function detailsQuery(element,crn, semester, year, questionId, clickedButton) {
 										((array['DPTSEMESTERAVERAGEA'] / array['DPTSEMESTERAVERAGETOTAL']) * totalBarLength),
 										((array['DPTSEMESTERAVERAGESA'] / array['DPTSEMESTERAVERAGETOTAL']) * totalBarLength),
 										((array['DPTSEMESTERAVERAGENA'] / array['DPTSEMESTERAVERAGETOTAL']) * totalBarLength));
-	        normPixelLength();
+	        normPixelLength(currentLengths);
 	        resultString += '						<td align="left"> ';
 	        resultString += '						';
 	        resultString += '							<div class="graph_expanded">';
@@ -648,7 +649,7 @@ function detailsQuery(element,crn, semester, year, questionId, clickedButton) {
 										((array['PERSONALSEMESTERAVERAGEA'] / array['PERSONALSEMESTERAVERAGETOTAL']) * totalBarLength),
 										((array['PERSONALSEMESTERAVERAGESA'] / array['PERSONALSEMESTERAVERAGETOTAL']) * totalBarLength),
 										((array['PERSONALSEMESTERAVERAGENA'] / array['PERSONALSEMESTERAVERAGETOTAL']) * totalBarLength));
-	        normPixelLength();
+	        normPixelLength(currentLengths);
 	        resultString += '						<td align="left"> ';
 	        resultString += '						';
 	        resultString += '							<div class="graph_expanded">';
@@ -683,7 +684,7 @@ function detailsQuery(element,crn, semester, year, questionId, clickedButton) {
 										(((array['DPTFIVEYEARCOURSEAVERAGEA'] / array['DPTFIVEYEARCOURSEAVERAGETOTAL'])) * totalBarLength),
 										(((array['DPTFIVEYEARCOURSEAVERAGESA'] / array['DPTFIVEYEARCOURSEAVERAGETOTAL'])) * totalBarLength),
 										(((array['DPTFIVEYEARCOURSEAVERAGENA'] / array['DPTFIVEYEARCOURSEAVERAGETOTAL'])) * totalBarLength));
-	        normPixelLength();
+	        normPixelLength(currentLengths);
 	        //resultString +='									<div class="graph_box graphStronglyDisagree" style="width:'+((array['DPTFIVEYEARCOURSEAVERAGESD']/array['DPTFIVEYEARCOURSEAVERAGETOTAL'])*totalBarLength)+'px;"></div>	';
 	        //resultString +='									<div class="graph_box graphDisagree" style="width:'+((array['DPTFIVEYEARCOURSEAVERAGED']/array['DPTFIVEYEARCOURSEAVERAGETOTAL'])*totalBarLength)+'px;"></div>';
 	        //resultString +='									<div class="graph_box graphNeutral" style="width:'+((array['DPTFIVEYEARCOURSEAVERAGEN']/array['DPTFIVEYEARCOURSEAVERAGETOTAL'])*totalBarLength)+'px;"></div>';
@@ -725,7 +726,7 @@ function detailsQuery(element,crn, semester, year, questionId, clickedButton) {
 										(((array['PERSONALFIVEYEARAVERAGEA'] / array['PERSONALFIVEYEARAVERAGETOTAL'])) * totalBarLength),
 										(((array['PERSONALFIVEYEARAVERAGESA'] / array['PERSONALFIVEYEARAVERAGETOTAL'])) * totalBarLength),
 										(((array['PERSONALFIVEYEARAVERAGENA'] / array['PERSONALFIVEYEARAVERAGETOTAL'])) * totalBarLength));
-	        normPixelLength();
+	        normPixelLength(currentLengths);
 	        resultString += '								<img class="displaycolor" src = "images/colorStronglyDisagree.png" width="' + currentLengths[0] + 'px" height="' + barHeight + 'px" title="Disagree: ' + ((array['PERSONALFIVEYEARAVERAGESD'] / array['PERSONALFIVEYEARAVERAGETOTAL']) * 100).toFixed(2) + '%' + '"> ';
 	        resultString += '								<img class="displaycolor" src = "images/colorDisagree.png" width="' + currentLengths[1] + 'px" height="' + barHeight + 'px" title="Disagree: ' + ((array['PERSONALFIVEYEARAVERAGED'] / array['PERSONALFIVEYEARAVERAGETOTAL']) * 100).toFixed(2) + '%' + '"> ';
 	        resultString += '								<img class="displaycolor"  src = "images/colorNeutral.png" width="' + currentLengths[2] + 'px" height="' + barHeight + 'px" title="Neutral: ' + ((array['PERSONALFIVEYEARAVERAGEN'] / array['PERSONALFIVEYEARAVERAGETOTAL']) * 100).toFixed(2) + '%' + '"> ';
@@ -783,8 +784,8 @@ function detailsQuery(element,crn, semester, year, questionId, clickedButton) {
 }*/
 
 $(function () {
-    $(document).delegate(".button", "click", function () { detailsQuery(currentElement,CRN, Semester, Year, $(this).siblings(".hiddenQuestionID").val(), this); });
-    $(document).delegate(".tpbutton", "click", function () { detailsTop(currentElement,CRN, Semester, Year, this); });
+   //$(document).delegate(".button", "click", function () { detailsQuery(currentElement,CRN, Semester, Year, $(this).siblings(".hiddenQuestionID").val(), this); });
+    //$(document).delegate(".tpbutton", "click", function () { detailsTop(currentElement,CRN, Semester, Year, this); });
 
 });
 
@@ -798,6 +799,7 @@ function nextCrn()
         addToReport(crnArray[currentCRNIndex], Semester, Year);
         currentCRNIndex++;
         $('#loadingstatus').get(0).innerHTML = '<p class="loadinggif">' + currentCRNIndex + ' of ' + crnArray.length + ' classes</p></br><img class="loadinggif" src=".\\images\\ajax-loader.gif" "/>';
+
     }
     // we completed it so turn off the loading status div
     else {
@@ -917,6 +919,8 @@ function addToReport(CRN, Semester,Year)
     element.id = "class" + CRN;
     //element.outerHTML = divHTML;
     currentElement = element;
+    $(element).delegate(".button", "click", function () { detailsQuery(currentElement, CRN, Semester, Year, $(this).siblings(".hiddenQuestionID").val(), this); });
+    $(element).delegate(".tpbutton", "click", function () { detailsTop(currentElement, CRN, Semester, Year, this); });
 
     $(element).find("#StatisticsWrapper").before('<p class="loadinggif">Calculating...</p></br><img class="loadinggif" src=".\\images\\ajax-loader.gif" "/>');
     titleQuery(element,CRN, Semester, Year);
@@ -949,6 +953,7 @@ var crnStatistics = [];
 var questionCollapserId = 0;
 var totalQuestions = 0;*/
 var questionJSON = {};
+var storedQuestions = {};
 
 
 var totalRespondents = [];
