@@ -409,8 +409,12 @@ function detailsTop(element, crn, semester, year, clickedButton) {
                     //statsTableString = statsTableString + '	<td><div class="container"><div class="overall_bar yellow littleTicks" style="width:'+getPixelLength(array2[0]).toFixed(2)+'px"></div></div></td>';
                     statsTableString = statsTableString + '	<td><div class="container"; style="position:relative"><img align="left" src = "images/colorTopBars.png" width="' + getPixelLength(array2[0]).toFixed(2) + 'px" height=20px"><img align="left" src = "images/colorTopBarBackground.png" width="' + (400 - getPixelLength(array2[0]).toFixed(2)) + 'px" height=20px"><img style="position:absolute; top:0; left:0" src = "images/littleticks.png"></div></td>';
 
-                    statsTableString = statsTableString + '	<td style="width: 100px; text-align:center">' + Number(array2[1]).toFixed(2) + '</td>';
-                    statsTableString = statsTableString + '</tr>';
+                    if (Number(array2[1]).toFixed(2) >= 1.0) {
+                        statsTableString = statsTableString + '	<td style="width: 100px; text-align:center;color:red">' + Number(array2[1]).toFixed(2) + '</td>';
+                    } else {
+                        statsTableString = statsTableString + '	<td style="width: 100px; text-align:center">' + Number(array2[1]).toFixed(2) + '</td>';
+                    }
+                        statsTableString = statsTableString + '</tr>';
                 });
             }).done(function () {
                 statsTableString = statsTableString + '<tr class="gap" style="display:none;">';
