@@ -267,8 +267,10 @@ function titleQuery(element, crn, semester, year) {
 
 	            if (data.DATA == "") //IN THE EVENT TITLE DATA CANNOT BE RETRIEVED
 	            {
-	                $(element).find("#title_wrapper").append('<h2>Course Evaluation</h2>' + ' Semester ' + Semester + ' - CRN ' + CRN + ' - Year ' + Year);
-	                window.ClassName = 'CRN ' + CRN;
+	                //$(element).find("#title_wrapper").append('<h2>Course Evaluation</h2>' + ' Semester ' + Semester + ' - CRN ' + CRN + ' - Year ' + Year);
+	                // window.ClassName = 'CRN ' + CRN;
+	                titleQueryComplete(element, false);
+	                return;
 	            }
 	            else				//RETREIVE AND UTILIZE TITLE DATA
 	            {
@@ -848,6 +850,9 @@ function onErrorQueries(wrapperElement) {
     wrapperElement["TOPDETAILS"] = false;
     wrapperElement["ESSAYQUERY"] = false;
     wrapperElement["TITLEQUERY"] = false;
+    $('#crnErrors').append(wrapperElement.crn + ' is an invalid CRN<br />');
+    $(wrapperElement).remove();
+    
 }
 function failedQueries(element) {
     return !element["TOPQUERY"] && !element["TOPDETAILS"] && !element["TITLEQUERY"]
@@ -943,6 +948,7 @@ function addToReport(CRN, Semester, Year) {
     element.innerHTML = divHTML;
     document.body.appendChild(element);
     element.id = "class" + CRN;
+    element.crn = CRN;
     //element.outerHTML = divHTML;
     currentElement = element;
     $(element).delegate(".button", "click", function () { detailsQuery(currentElement, CRN, Semester, Year, $(this).siblings(".hiddenQuestionID").val(), this); });
