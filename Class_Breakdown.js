@@ -320,7 +320,13 @@ function topQuery(element, crn, semester, year) {
             //tempString = tempString + '			<td><div class="container ticks"><div class="overall_ bigbar yellow ticks" style="width:'+getPixelLength(keyValPair['CLASSSCORE']).toFixed(2)+'px"></div></div></td>';
             tempString = tempString + '	<td><div class="container"; style="position:relative"><img align="left" src = "images/colorTopBars.png" width="' + currentLengths[0] + 'px" height=40px"><img align="left" src = "images/colorTopBarBackground.png" width="' + currentLengths[1] + 'px" height=40px"><img style="position:absolute; top:0; left:0" src = "images/ticks.png"></div></td>';
 
-            tempString = tempString + '			<td style="width: 100px; text-align:center">' + Number(keyValPair['CLASSSTDEVIATION']).toFixed(2) + '</td>';
+            if (Number(keyValPair['CLASSSTDEVIATION']).toFixed(2) >= 1.0) {
+                tempString = tempString + '			<td style="width: 100px; text-align:center;color:red;">' + Number(keyValPair['CLASSSTDEVIATION']).toFixed(2) + '</td>';
+            }
+            else {
+                tempString = tempString + '			<td style="width: 100px; text-align:center">' + Number(keyValPair['CLASSSTDEVIATION']).toFixed(2) + '</td>';
+            }
+            //tempString = tempString + '			<td style="width: 100px; text-align:center">' + Number(keyValPair['CLASSSTDEVIATION']).toFixed(2) + '</td>';
             tempString = tempString + '		</tr>';
             tempString = tempString + '	</tbody>';
             tempString = tempString + ' </table>';
@@ -413,15 +419,30 @@ function detailsTop(element, crn, semester, year, clickedButton) {
                 //statsTableString = statsTableString + '	<td><div class="container"><div class="overall_bar littleTicks" style="width:'+getPixelLength(crnStatistics2['INSTRUCTORSEMESTERAVERAGE']).toFixed(2)+'px"></div></div></td>';
                 statsTableString = statsTableString + '	<td><div class="container"; style="position:relative"><img align="left" src = "images/colorTopBars.png" width="' + getPixelLength(crnStatistics2['INSTRUCTORSEMESTERAVERAGE']).toFixed(2) + 'px" height=20px"><img align="left" src = "images/colorTopBarBackground.png" width="' + (400 - getPixelLength(crnStatistics2['INSTRUCTORSEMESTERAVERAGE']).toFixed(2)) + 'px" height=20px"><img style="position:absolute; top:0; left:0" src = "images/littleticks.png"></div></td>';
 
-                statsTableString = statsTableString + '	<td style="width: 100px;text-align:center">' + Number(crnStatistics2['INSTRUCTORSEMESTERSTDEVIATION']).toFixed(2) + '</td>';
+                if (Number(crnStatistics2['INSTRUCTORSEMESTERSTDEVIATION']).toFixed(2) >= 1.0) {
+
+                    statsTableString = statsTableString + '	<td style="width: 100px;text-align:center;color:red">' + Number(crnStatistics2['INSTRUCTORSEMESTERSTDEVIATION']).toFixed(2) + '</td>';
+                }
+                else {
+                    statsTableString = statsTableString + '	<td style="width: 100px;text-align:center;">' + Number(crnStatistics2['INSTRUCTORSEMESTERSTDEVIATION']).toFixed(2) + '</td>';
+                    
+                }
+                
                 statsTableString = statsTableString + '</tr>';
                 statsTableString = statsTableString + '<tr style="display:none;">';
                 statsTableString = statsTableString + '	<td style="width: 300px;">Dept. Semester Average</td>';
                 statsTableString = statsTableString + '	<td style="width: 60px">' + Number(crnStatistics2['DEPARTMENTSEMESTERAVERAGE']).toFixed(2) + '</td>';
                 //statsTableString = statsTableString + '	<td><div class="container"><div class="overall_bar littleTicks" style="width:'+getPixelLength(crnStatistics2['DEPARTMENTSEMESTERAVERAGE']).toFixed(2)+'px"></div></div></td>';
                 statsTableString = statsTableString + '	<td><div class="container"; style="position:relative"><img align="left" src = "images/colorTopBars.png" width="' + getPixelLength(crnStatistics2['DEPARTMENTSEMESTERAVERAGE']).toFixed(2) + 'px" height=20px"><img align="left" src = "images/colorTopBarBackground.png" width="' + (400 - getPixelLength(crnStatistics2['DEPARTMENTSEMESTERAVERAGE']).toFixed(2)) + 'px" height=20px"><img style="position:absolute; top:0; left:0" src = "images/littleticks.png"></div></td>';
+                if (Number(crnStatistics2['DEPARTMENTSEMESTERSTDEVIATION']).toFixed(2) >= 1.0) {
 
-                statsTableString = statsTableString + '	<td style="width: 100px;text-align:center">' + Number(crnStatistics2['DEPARTMENTSEMESTERSTDEVIATION']).toFixed(2) + '</td>';
+                    statsTableString = statsTableString + '	<td style="width: 100px;text-align:center;color:red">' + Number(crnStatistics2['DEPARTMENTSEMESTERSTDEVIATION']).toFixed(2) + '</td>';
+                }
+                else {
+                    statsTableString = statsTableString + '	<td style="width: 100px;text-align:center;">' + Number(crnStatistics2['DEPARTMENTSEMESTERSTDEVIATION']).toFixed(2) + '</td>';
+
+                }
+                //statsTableString = statsTableString + '	<td style="width: 100px;text-align:center">' + Number(crnStatistics2['DEPARTMENTSEMESTERSTDEVIATION']).toFixed(2) + '</td>';
                 statsTableString = statsTableString + '</tr>';
                 statsTableString = statsTableString + '<tr style="display:none;">';
                 statsTableString = statsTableString + '	<td style="width: 300px;">Dept. ' + window.ClassName + ' 5 Year Average</td>';
@@ -429,7 +450,15 @@ function detailsTop(element, crn, semester, year, clickedButton) {
                 //statsTableString = statsTableString + '	<td><div class="container"><div class="overall_bar littleTicks" style="width:'+getPixelLength(crnStatistics2['DEPARTMENTCLASSFIVEYEARAVERAGE']).toFixed(2)+'px"></div></div></td>';
                 statsTableString = statsTableString + '	<td><div class="container"; style="position:relative"><img align="left" src = "images/colorTopBars.png" width="' + getPixelLength(crnStatistics2['DEPARTMENTCLASSFIVEYEARAVERAGE']).toFixed(2) + 'px" height=20px"><img align="left" src = "images/colorTopBarBackground.png" width="' + (400 - getPixelLength(crnStatistics2['DEPARTMENTCLASSFIVEYEARAVERAGE']).toFixed(2)) + 'px" height=20px"><img style="position:absolute; top:0; left:0" src = "images/littleticks.png"></div></td>';
 
-                statsTableString = statsTableString + '	<td style="width: 100px;text-align:center">' + Number(crnStatistics2['DEPARTMENTCLASSFIVEYEARSTDEVIATION']).toFixed(2) + '</td>';
+                if (Number(crnStatistics2['DEPARTMENTCLASSFIVEYEARSTDEVIATION']).toFixed(2) >= 1.0) {
+
+                    statsTableString = statsTableString + '	<td style="width: 100px;text-align:center;color:red">' + Number(crnStatistics2['DEPARTMENTCLASSFIVEYEARSTDEVIATION']).toFixed(2) + '</td>';
+                }
+                else {
+                    statsTableString = statsTableString + '	<td style="width: 100px;text-align:center;">' + Number(crnStatistics2['DEPARTMENTCLASSFIVEYEARSTDEVIATION']).toFixed(2) + '</td>';
+
+                }
+                //statsTableString = statsTableString + '	<td style="width: 100px;text-align:center">' + Number(crnStatistics2['DEPARTMENTCLASSFIVEYEARSTDEVIATION']).toFixed(2) + '</td>';
                 statsTableString = statsTableString + '</tr>';
                 statsTableString = statsTableString + '<tr style="display:none;">';
                 statsTableString = statsTableString + '	<td style="width: 300px;">Your ' + window.ClassName + ' 5 Year Average</td>';
@@ -437,7 +466,15 @@ function detailsTop(element, crn, semester, year, clickedButton) {
                 //statsTableString = statsTableString + '	<td><div class="container"><div class="overall_bar littleTicks" style="width:'+getPixelLength(crnStatistics2['INSTRUCTORCLASSFIVEYEARAVERAGE']).toFixed(2)+'px"></div></div></td>';
                 statsTableString = statsTableString + '	<td><div class="container"; style="position:relative"><img align="left" src = "images/colorTopBars.png" width="' + getPixelLength(crnStatistics2['INSTRUCTORCLASSFIVEYEARAVERAGE']).toFixed(2) + 'px" height=20px"><img align="left" src = "images/colorTopBarBackground.png" width="' + (400 - getPixelLength(crnStatistics2['INSTRUCTORCLASSFIVEYEARAVERAGE']).toFixed(2)) + 'px" height=20px"><img style="position:absolute; top:0; left:0" src = "images/littleticks.png"></div></td>';
 
-                statsTableString = statsTableString + '	<td style="width: 100px;text-align:center">' + Number(crnStatistics2['INSTRUCTORCLASSFIVEYEARSTDEVIATION']).toFixed(2) + '</td>';
+                if (Number(crnStatistics2['INSTRUCTORCLASSFIVEYEARSTDEVIATION']).toFixed(2) >= 1.0) {
+
+                    statsTableString = statsTableString + '	<td style="width: 100px;text-align:center;color:red">' + Number(crnStatistics2['INSTRUCTORCLASSFIVEYEARSTDEVIATION']).toFixed(2) + '</td>';
+                }
+                else {
+                    statsTableString = statsTableString + '	<td style="width: 100px;text-align:center;">' + Number(crnStatistics2['INSTRUCTORCLASSFIVEYEARSTDEVIATION']).toFixed(2) + '</td>';
+
+                }
+                //statsTableString = statsTableString + '	<td style="width: 100px;text-align:center">' + Number(crnStatistics2['INSTRUCTORCLASSFIVEYEARSTDEVIATION']).toFixed(2) + '</td>';
                 statsTableString = statsTableString + '</tr>';
                 statsTableString = statsTableString + '<tr style="display:none;">';
                 var decile = Number(crnStatistics2['DECTILE']);
