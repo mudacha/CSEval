@@ -51,7 +51,9 @@ function getAnswerLength(answerCount, currentTotal) {
 function essayQuery(element, crn, semester, year) {
     //jQuery.getJSON('/misc/weber/CSEvals/essayAnswers.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
     jQuery.getJSON('EssayAnswers.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data) {
-
+        if (currentElement != element) {
+            return;
+        }
         try {
             var questionsAndResponses = [];
 
@@ -107,6 +109,9 @@ function mainQuery(element, crn, semester, year) {
 	    type: "GET",
 	    dataType: "json",
 	    success: function (data) {
+	        if (currentElement != element) {
+	            return;
+	        }
 	        try {
 	            var currentQuestion = " ";
 	            var currentQuestionID;
@@ -249,6 +254,9 @@ function mainQuery(element, crn, semester, year) {
 	        }
 	    },
 	    error: function (xhr, ajaxOptions, thrownError) {
+	        if (currentElement != element) {
+	            return;
+	        }
 	        mainQueryComplete(element, false);
 	    }
 	});
@@ -264,6 +272,9 @@ function titleQuery(element, crn, semester, year) {
 	    dataType: "json",
 	    success: function (data) {
 	        try {
+	            if (currentElement != element) {
+	                return;
+	            }
 
 	            if (data.DATA == "") //IN THE EVENT TITLE DATA CANNOT BE RETRIEVED
 	            {
@@ -277,7 +288,7 @@ function titleQuery(element, crn, semester, year) {
 	                $.each(data.DATA, function (i, array) {
 	                    var dataArray = toKeyValPair(data.COLUMNS, String(array).split(','));	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
 
-	                    window.ClassName = dataArray['CLASSSTRING'];
+	                    element["CLASSNAME"] = dataArray['CLASSSTRING'];
 	                    if (dataArray['SEMESTERSTRING'] == "Summer" || dataArray['SEMESTERSTRING'] == "Fall") {
 	                        dataArray['YEAR'] -= 1; //Set the year back one
 	                    }
@@ -291,6 +302,9 @@ function titleQuery(element, crn, semester, year) {
 	        }
 	    },
 	    error: function (xhr, ajaxOptions, thrownError) {
+	        if (currentElement != element) {
+	            return;
+	        }
 	        titleQueryComplete(element, false);
 	    }
 	});
@@ -301,10 +315,13 @@ function topQuery(element, crn, semester, year) {
 
     //jQuery.getJSON('/misc/weber/CSEvals/CrnStatistics.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
     jQuery.getJSON('CrnStatistics.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data) {
+        if (currentElement != element) {
+            return;
+        }
         try {
             var keyValPair = toKeyValPair(data.COLUMNS, String(data.DATA).split(','));
 
-            crnStatistics = keyValPair['INSTRUCTORSEMESTERAVERAGE'];
+            var crnStatistics = keyValPair['INSTRUCTORSEMESTERAVERAGE'];
             var currentLengths = new Array(getPixelLength(keyValPair['CLASSSCORE']).toFixed(2), (400 - getPixelLength(keyValPair['CLASSSCORE']).toFixed(2)));
             currentLengths = normPixelLength(currentLengths);
             var tempString = '';
@@ -346,7 +363,9 @@ function topQuery(element, crn, semester, year) {
         }
 
     }, function (reason) {
-
+        if (currentElement != element) {
+            return;
+        }
         topQueryComplete(element, false);
 
     });
@@ -377,6 +396,9 @@ function detailsTop(element, crn, semester, year, clickedButton) {
     $(element).find("#top_detail").before('<p class="loadinggif">Calculating...</p></br><img class="loadinggif" src=".\\images\\ajax-loader.gif" "/>');
     //jQuery.get('/misc/weber/CSEvals/CrnStatistics.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
     jQuery.get('CrnStatistics.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data) {
+        if (currentElement != element) {
+            return;
+        }
         var statsTableString = ' <table style="margin-top:0px">';
         statsTableString = statsTableString + ' <tbody>';
 
@@ -419,6 +441,9 @@ function detailsTop(element, crn, semester, year, clickedButton) {
                         statsTableString = statsTableString + '</tr>';
                 });
             }).done(function () {
+                //if (currentElement != element) {
+                //    return;
+                //}
                 statsTableString = statsTableString + '<tr class="gap" style="display:none;">';
                 statsTableString = statsTableString + '	<td style="width: 300px;">Your Overall Semester Average</td>';
                 statsTableString = statsTableString + '	<td style="width: 60px">' + Number(crnStatistics2['INSTRUCTORSEMESTERAVERAGE']).toFixed(2) + '</td>';
@@ -451,7 +476,7 @@ function detailsTop(element, crn, semester, year, clickedButton) {
                 //statsTableString = statsTableString + '	<td style="width: 100px;text-align:center">' + Number(crnStatistics2['DEPARTMENTSEMESTERSTDEVIATION']).toFixed(2) + '</td>';
                 statsTableString = statsTableString + '</tr>';
                 statsTableString = statsTableString + '<tr style="display:none;">';
-                statsTableString = statsTableString + '	<td style="width: 300px;">Dept. ' + window.ClassName + ' 5 Year Average</td>';
+                statsTableString = statsTableString + '	<td style="width: 300px;">Dept. ' + element["CLASSNAME"] + ' 5 Year Average</td>';
                 statsTableString = statsTableString + '	<td style="width: 60px">' + Number(crnStatistics2['DEPARTMENTCLASSFIVEYEARAVERAGE']).toFixed(2) + '</td>';
                 //statsTableString = statsTableString + '	<td><div class="container"><div class="overall_bar littleTicks" style="width:'+getPixelLength(crnStatistics2['DEPARTMENTCLASSFIVEYEARAVERAGE']).toFixed(2)+'px"></div></div></td>';
                 statsTableString = statsTableString + '	<td><div class="container"; style="position:relative"><img align="left" src = "images/colorTopBars.png" width="' + getPixelLength(crnStatistics2['DEPARTMENTCLASSFIVEYEARAVERAGE']).toFixed(2) + 'px" height=20px"><img align="left" src = "images/colorTopBarBackground.png" width="' + (400 - getPixelLength(crnStatistics2['DEPARTMENTCLASSFIVEYEARAVERAGE']).toFixed(2)) + 'px" height=20px"><img style="position:absolute; top:0; left:0" src = "images/littleticks.png"></div></td>';
@@ -467,7 +492,7 @@ function detailsTop(element, crn, semester, year, clickedButton) {
                 //statsTableString = statsTableString + '	<td style="width: 100px;text-align:center">' + Number(crnStatistics2['DEPARTMENTCLASSFIVEYEARSTDEVIATION']).toFixed(2) + '</td>';
                 statsTableString = statsTableString + '</tr>';
                 statsTableString = statsTableString + '<tr style="display:none;">';
-                statsTableString = statsTableString + '	<td style="width: 300px;">Your ' + window.ClassName + ' 5 Year Average</td>';
+                statsTableString = statsTableString + '	<td style="width: 300px;">Your ' + element["CLASSNAME"] + ' 5 Year Average</td>';
                 statsTableString = statsTableString + '	<td style="width: 60px">' + Number(crnStatistics2['INSTRUCTORCLASSFIVEYEARAVERAGE']).toFixed(2) + '</td>';
                 //statsTableString = statsTableString + '	<td><div class="container"><div class="overall_bar littleTicks" style="width:'+getPixelLength(crnStatistics2['INSTRUCTORCLASSFIVEYEARAVERAGE']).toFixed(2)+'px"></div></div></td>';
                 statsTableString = statsTableString + '	<td><div class="container"; style="position:relative"><img align="left" src = "images/colorTopBars.png" width="' + getPixelLength(crnStatistics2['INSTRUCTORCLASSFIVEYEARAVERAGE']).toFixed(2) + 'px" height=20px"><img align="left" src = "images/colorTopBarBackground.png" width="' + (400 - getPixelLength(crnStatistics2['INSTRUCTORCLASSFIVEYEARAVERAGE']).toFixed(2)) + 'px" height=20px"><img style="position:absolute; top:0; left:0" src = "images/littleticks.png"></div></td>';
@@ -494,9 +519,9 @@ function detailsTop(element, crn, semester, year, clickedButton) {
                 originalDiv.append(statsTableString);
                 originalDiv.find(":hidden").slideDown(UIspeed);
                 $(element).find(".loadinggif").remove();
+                topDetailsComplete(element, true);
             });
         });
-        topDetailsComplete(element, true);
     });
 
     statsTableString = '	</tbody>';
@@ -542,6 +567,7 @@ function detailsQuery(element, crn, semester, year, questionId, clickedButton) {
 	    type: "GET",
 	    dataType: "json",
 	    success: function (data) {
+	        
 	        //resultString += '<p class="loadinggif">Calculating...</p></br><img class="loadinggif" src=".\\images\\ajax-loader.gif';
 	        //expanderDiv.append(resultString);
 	        //var connectionString = '';
@@ -705,7 +731,7 @@ function detailsQuery(element, crn, semester, year, questionId, clickedButton) {
 	        resultString += '						</td>';
 	        resultString += '					</tr>	';
 	        resultString += '					<tr>';
-	        resultString += '						<td align="left" style="width:100px">Dpt ' + window.ClassName + ' 5 Year Average</td>';
+	        resultString += '						<td align="left" style="width:100px">Dpt ' + element["CLASSNAME"] + ' 5 Year Average</td>';
 	        resultString += '						<td align="left" style="width:' + cellWidth + '">' + ((array['DPTFIVEYEARCOURSEAVERAGESD'] / array['DPTFIVEYEARCOURSEAVERAGETOTAL']) * 100).toFixed(0) + '%</td>	';
 	        resultString += '						<td align="left" style="width:' + cellWidth + '">' + ((array['DPTFIVEYEARCOURSEAVERAGED'] / array['DPTFIVEYEARCOURSEAVERAGETOTAL']) * 100).toFixed(0) + '%</td>';
 	        resultString += '						<td align="left" style="width:' + cellWidth + '">' + ((array['DPTFIVEYEARCOURSEAVERAGEN'] / array['DPTFIVEYEARCOURSEAVERAGETOTAL']) * 100).toFixed(0) + '%</td>';
@@ -743,7 +769,7 @@ function detailsQuery(element, crn, semester, year, questionId, clickedButton) {
 	        resultString += '						</td>';
 	        resultString += '					</tr>';
 	        resultString += '					<tr>';
-	        resultString += '						<td align="left" style="width:100px">Your ' + window.ClassName + ' 5 Year Average</td>';
+	        resultString += '						<td align="left" style="width:100px">Your ' + element["CLASSNAME"] + ' 5 Year Average</td>';
 	        resultString += '						<td align="left" style="width:' + cellWidth + '">' + ((array['PERSONALFIVEYEARAVERAGESD'] / array['PERSONALFIVEYEARAVERAGETOTAL']) * 100).toFixed(0) + '%</td>	';
 	        resultString += '						<td align="left" style="width:' + cellWidth + '">' + ((array['PERSONALFIVEYEARAVERAGED'] / array['PERSONALFIVEYEARAVERAGETOTAL']) * 100).toFixed(0) + '%</td>';
 	        resultString += '						<td align="left" style="width:' + cellWidth + '">' + ((array['PERSONALFIVEYEARAVERAGEN'] / array['PERSONALFIVEYEARAVERAGETOTAL']) * 100).toFixed(0) + '%</td>';
@@ -792,6 +818,7 @@ function detailsQuery(element, crn, semester, year, questionId, clickedButton) {
 
 	    },
 	    error: function (xhr, ajaxOptions, thrownError, asdf) {
+	        
 	        alert("failed to process Ajax");
 	    }
 	});
@@ -850,15 +877,18 @@ function onErrorQueries(wrapperElement) {
     wrapperElement["TOPDETAILS"] = false;
     wrapperElement["ESSAYQUERY"] = false;
     wrapperElement["TITLEQUERY"] = false;
+    wrapperElement["FAILED"] = true;
     $('#crnErrors').append(wrapperElement.crn + ' is an invalid CRN<br />');
     $(wrapperElement).remove();
     
 }
 function failedQueries(element) {
-    return !element["TOPQUERY"] && !element["TOPDETAILS"] && !element["TITLEQUERY"]
-           && !element["MAINQUERY"] && !element["ESSAYQUERY"];
+    //return !element["TOPQUERY"] && !element["TOPDETAILS"] && !element["TITLEQUERY"]
+    //       && !element["MAINQUERY"] && !element["ESSAYQUERY"];
+    return element["FAILED"];
 }
 function topQueryComplete(wrapperElement, passed) {
+    
     if (!passed) {
         //execute failed event
         onErrorQueries(wrapperElement);
@@ -877,6 +907,8 @@ function topQueryComplete(wrapperElement, passed) {
 }
 
 function topDetailsComplete(wrapperElement, passed) {
+
+    
     if (!passed) {
         //execute failed event
         onErrorQueries(wrapperElement);
@@ -894,6 +926,7 @@ function topDetailsComplete(wrapperElement, passed) {
 }
 
 function mainQueryComplete(wrapperElement, passed) {
+    
     if (!passed) {
         //execute failed event
         onErrorQueries(wrapperElement);
@@ -912,8 +945,14 @@ function mainQueryComplete(wrapperElement, passed) {
 }
 
 function essayQueryComplete(wrapperElement, passed) {
+   
     if (!passed) {
         //execute failed event
+        onErrorQueries(wrapperElement);
+    }
+    if (failedQueries(wrapperElement)) {
+        nextCrn();
+        return;
     }
     wrapperElement["ESSAYQUERY"] = passed;
     if (checkCompletedAllQueries(wrapperElement)) {
@@ -924,6 +963,7 @@ function essayQueryComplete(wrapperElement, passed) {
 }
 
 function titleQueryComplete(wrapperElement, passed) {
+    
     if (!passed) {
         //execute failed event
         onErrorQueries(wrapperElement);
@@ -951,8 +991,8 @@ function addToReport(CRN, Semester, Year) {
     element.crn = CRN;
     //element.outerHTML = divHTML;
     currentElement = element;
-    $(element).delegate(".button", "click", function () { detailsQuery(currentElement, CRN, Semester, Year, $(this).siblings(".hiddenQuestionID").val(), this); });
-    $(element).delegate(".tpbutton", "click", function () { detailsTop(currentElement, CRN, Semester, Year, this); });
+    $(element).delegate(".button", "click", function () { detailsQuery(element, CRN, Semester, Year, $(this).siblings(".hiddenQuestionID").val(), this); });
+    $(element).delegate(".tpbutton", "click", function () { detailsTop(element, CRN, Semester, Year, this); });
 
     $(element).find("#StatisticsWrapper").before('<p class="loadinggif">Calculating...</p></br><img class="loadinggif" src=".\\images\\ajax-loader.gif" "/>');
     titleQuery(element, CRN, Semester, Year);
