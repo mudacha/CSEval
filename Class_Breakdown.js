@@ -879,6 +879,7 @@ function onErrorQueries(wrapperElement) {
     wrapperElement["TITLEQUERY"] = false;
     wrapperElement["FAILED"] = true;
     $('#crnErrors').append(wrapperElement.crn + ' is an invalid CRN<br />');
+    $('#footer'+wrapperElement.crn).remove();
     $(wrapperElement).remove();
     
 }
@@ -1002,8 +1003,8 @@ function addToReport(CRN, Semester, Year) {
 
 
     //add footer that adds a page break for css
-    $(element).after('<br /> <br />');
-    $(element).after('<footer class="pagebreak">  </footer>');
+    if(currentCRNIndex < crnArray.length -2)
+        $(element).after('<footer id="footer' + CRN +'"  class="pagebreak"><br /> <br />  </footer>');
 }
 var resultString = "";
 var CRN = 0;
