@@ -874,7 +874,7 @@ function getURLParameter(name) {
 }
 function nextCrn() {
     if (currentCRNIndex < crnArray.length) {
-        addToReport(crnArray[currentCRNIndex], Semester, Year);
+        addToReport(crnArray[currentCRNIndex][0], crnArray[currentCRNIndex][1], crnArray[currentCRNIndex][2]);
         currentCRNIndex++;
         $('#loadingstatus').get(0).innerHTML = '<p class="loadinggif">' + currentCRNIndex + ' of ' + crnArray.length + ' classes</p></br><img class="loadinggif" src=".\\images\\ajax-loader.gif" "/>';
 
@@ -1053,38 +1053,46 @@ crnArray = CRN.split(',');
 
 currentCRNIndex = 0;
 //CRN = parseInt(getURLParameter('CRN'));
-Semester = parseInt(getURLParameter('Semester'));
-Year = parseInt(getURLParameter('Year'));
+//Semester = parseInt(getURLParameter('Semester'));
+//Year = parseInt(getURLParameter('Year'));
 currentElement = {};
 divHTML = "<div class=\"wrapper\">\r\n\t\r\n\t\t<div class=\"title\" id=\"title_wrapper\" style=\"margin:0px;padding:0px;\">\r\n\t\t\t<!-- course evaluation - cs1400 67877 spr 2013 -->\r\n\t\t<\/div>\r\n\t\t<div id=\"StatisticsWrapper\"><\/div>\r\n\t\t<div class=\"bar_divider\"><hr\/><\/div>\r\n\t\t<div class=\"legend_box\">\r\n\t\t\t<div class=\"legend_graph\">\r\n\t\t\t\t\r\n\t\t\t\t<div class=\"headingAndText\">\r\n\t\t\t\t\t<img id=\"barimage\" src=\"images\/colorStronglyDisagree.png\" >\t\r\n\t\t\t\t\t<p id = \"textDouble\">Strongly Disagree<\/p>\r\n\t\t\t\t<\/div>\r\n\r\n\t\t\t\t<div class=\"headingAndText\">\r\n\t\t\t\t\t<img id=\"barimage\" src=\"images\/colorDisagree.png\" >\t\r\n\t\t\t\t\t<p id = \"text\">Disagree<\/p>\r\n\t\t\t\t<\/div>\r\n\r\n\t\t\t\t<div class=\"headingAndText\">\r\n\t\t\t\t\t<img id=\"barimage\" src=\"images\/colorNeutral.png\" >\t\r\n\t\t\t\t\t<p id = \"text\">Neutral<\/p>\r\n\t\t\t\t<\/div>\r\n\t\t\t\t\r\n\t\t\t\t<div class=\"headingAndText\">\r\n\t\t\t\t\t<img id=\"barimage\" src=\"images\/colorAgree.png\" >\t\r\n\t\t\t\t\t<p id = \"text\">Agree<\/p>\r\n\t\t\t\t<\/div>\r\n\r\n\t\t\t\t<div class=\"headingAndText\">\r\n\t\t\t\t\t<img id=\"barimage\" src=\"images\/colorStronglyAgree.png\" >\t\r\n\t\t\t\t\t<p id = \"textDouble\">Strongly<br\/>Agree<\/p>\r\n\t\t\t\t<\/div>\r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t<\/div>\r\n\t\t<\/div>\r\n\r\n\t\r\n\t\t<div id=\"questions_wrapper\"><\/div>\r\n\t\t\r\n\t\t<div class=\"bar_divider\"><hr\/><\/div>\r\n\r\n\t\t<div id=\"EssayWrapper\"><\/div>\r\n\t\t\r\n\t\t<div class=\"footer\">\r\n\t\t\t&copy; 2014 Weber State University\r\n\t\t<\/div>\r\n  <\/div>";
 
 window.onload = (function () {
 
-    /*for (var i = 0; i < crnArray.length; i++)
-    {
-        addToReport(parseInt(crnArray[i]), Semester, Year);
-    }
-    */
     errorCRN = [];
 
+    
+    var tempArray = [];
+
     for (var i = 0; i < crnArray.length; i++) {
-        if (crnArray[i].length != 5) {
-            errorCRN.push(crnArray[i]);
-            crnArray.splice(i, 1);
-            i--;
-        }
-        else if (isNaN(crnArray[i])) {
-            errorCRN.push(crnArray[i]);
-            crnArray.splice(i, 1);
-            i--;
+
+        crnData = crnArray[i].split('-');
+        if (crnData.length != 3) {
+            $('#crnErrors').append(crnArray[i] + ' is not in a valid parameter format <br/>');
+            break;
         }
 
+        if (crnData[0].length != 5) {
+            errorCRN.push(crnArray[i]);
+            break;
+        }
+        else if (isNaN(crnData[0])) {
+            errorCRN.push(crnArray[i]);
+            break;
+        }
+
+        tempArray.push(crnData);
+
     }
+
+    crnArray = tempArray;
 
     for (var e = 0; e < errorCRN.length; e++) {
 
         $('#crnErrors').append(errorCRN[e] + ' is not a valid CRN <br/>');
     }
+    
 
 
     var loadingStatus = document.createElement('div');
