@@ -290,13 +290,14 @@ function titleQuery(element, crn, semester, year) {
 	                
 	                $.each(data.DATA, function (i, array) {
 	                    var dataArray = toKeyValPair(data.COLUMNS, String(array).split(','));	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
-	                    element['SEMSETERSTRING'] = dataArray['SEMESTERSTRING'];
-	                    element["CLASSNAME"] = dataArray['CLASSSTRING'];
-	                    element["firstName"] = dataArray['FIRSTNAME'];
-	                    element["lastName"] = dataArray['LASTNAME'];
+	                    element.semesterName = dataArray['SEMESTERSTRING'];
+	                    element.className = dataArray['CLASSSTRING'];
+	                    element.firstName = dataArray['FIRSTNAME'];
+	                    element.lastName = dataArray['LASTNAME'];
 
 	                    if (dataArray['SEMESTERSTRING'] == "Summer" || dataArray['SEMESTERSTRING'] == "Fall") {
 	                        dataArray['YEAR'] -= 1; //Set the year back one
+	                        element.year = dataArray['YEAR'];
 	                    }
 	                    $(element).find("#title_wrapper").append('<h2>Course Evaluation</h2>' + dataArray['FIRSTNAME'] + ' ' + dataArray['LASTNAME'] + ' - ' + dataArray['CLASSSTRING'] + ' - CRN ' + dataArray['BANNERCRN'] + ' - ' + dataArray['SEMESTERSTRING'] + ' ' + dataArray['YEAR'] + '');
 	                });
@@ -329,8 +330,8 @@ function topQuery(element, crn, semester, year) {
             
             var keyValPair = toKeyValPair(data.COLUMNS, String(data.DATA).split(','));
 
-            element["score"] = Number(keyValPair['CLASSSCORE']).toFixed(2);
-            element["stddev"] = Number(keyValPair['CLASSSTDEVIATION']).toFixed(2);
+            element.score = Number(keyValPair['CLASSSCORE']).toFixed(2);
+            element.stddev = Number(keyValPair['CLASSSTDEVIATION']).toFixed(2);
 
             var crnStatistics = keyValPair['INSTRUCTORSEMESTERAVERAGE'];
             var currentLengths = new Array(getPixelLength(keyValPair['CLASSSCORE']).toFixed(2), (400 - getPixelLength(keyValPair['CLASSSCORE']).toFixed(2)));
@@ -1003,6 +1004,7 @@ function addToReport(CRN, Semester, Year) {
     document.body.appendChild(element);
     element.id = "class" + CRN;
     element.crn = CRN;
+    element.semesterNum = Semester;
     //element.outerHTML = divHTML;
     currentElement = element;
     $(element).delegate(".button", "click", function () { detailsQuery(element, CRN, Semester, Year, $(this).siblings(".hiddenQuestionID").val(), this); });
