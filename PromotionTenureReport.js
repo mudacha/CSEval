@@ -294,11 +294,12 @@ function titleQuery(element, crn, semester, year) {
 	                    element.className = dataArray['CLASSSTRING'];
 	                    element.firstName = dataArray['FIRSTNAME'];
 	                    element.lastName = dataArray['LASTNAME'];
-
+	                    element.year = dataArray['YEAR'];
 	                    if (dataArray['SEMESTERSTRING'] == "Summer" || dataArray['SEMESTERSTRING'] == "Fall") {
 	                        dataArray['YEAR'] -= 1; //Set the year back one
 	                        element.year = dataArray['YEAR'];
 	                    }
+	                    
 	                    $(element).find("#title_wrapper").append('<h2>Course Evaluation</h2>' + dataArray['FIRSTNAME'] + ' ' + dataArray['LASTNAME'] + ' - ' + dataArray['CLASSSTRING'] + ' - CRN ' + dataArray['BANNERCRN'] + ' - ' + dataArray['SEMESTERSTRING'] + ' ' + dataArray['YEAR'] + '');
 	                });
 	            }
@@ -883,6 +884,8 @@ function nextCrn() {
         // we completed it so turn off the loading status div
     else {
         $('#loadingstatus').remove();
+        loadChart(elementList);
+        generateTable(elementList);
     }
 }
 function onErrorQueries(wrapperElement) {
@@ -892,6 +895,7 @@ function onErrorQueries(wrapperElement) {
     wrapperElement["ESSAYQUERY"] = false;
     wrapperElement["TITLEQUERY"] = false;
     wrapperElement["FAILED"] = true;
+    elementList.splice(currentCRNIndex, 1);
     $('#crnErrors').append(wrapperElement.crn + ' is an invalid CRN<br />');
     $('#footer' + wrapperElement.crn).remove();
     $(wrapperElement).remove();
@@ -1005,6 +1009,7 @@ function addToReport(CRN, Semester, Year) {
     element.id = "class" + CRN;
     element.crn = CRN;
     element.semesterNum = Semester;
+    elementList.push(element);
     //element.outerHTML = divHTML;
     currentElement = element;
     $(element).delegate(".button", "click", function () { detailsQuery(element, CRN, Semester, Year, $(this).siblings(".hiddenQuestionID").val(), this); });
@@ -1052,7 +1057,7 @@ CRN = getURLParameter('CRN');
 crnArray = CRN.split(',');
 
 
-
+elementList = [];
 currentCRNIndex = 0;
 //CRN = parseInt(getURLParameter('CRN'));
 //Semester = parseInt(getURLParameter('Semester'));
