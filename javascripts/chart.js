@@ -137,7 +137,7 @@ function generateTable(objArray) {
         objArray.forEach(function (eval) {
             console.log(eval);
             if (label == eval.year + " - " + eval.semesterName) {
-                TocHtml = TocHtml + "<tr><td>" + eval.crn + "</td><td>" + eval.score + "</td><td>" + eval.stddev + "</td><td>" + eval.totalRespondents + "</td></tr>";
+                TocHtml = TocHtml + '<tr><td><a href="#class'+ eval.crn + '">'   + eval.crn + "</a></td><td>" + eval.score + "</td><td>" + eval.stddev + "</td><td>" + eval.totalRespondents + "</td></tr>";
             }
         });
         TocHtml = TocHtml + "</tbody></table>"
