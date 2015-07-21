@@ -1,25 +1,74 @@
 ﻿var extData = null;
-
+google.load("visualization", "1.1", { packages: ["corechart"] });
 //Setup and Calculate the info based on the input data.
 function loadChart(chartData) {
     //because the setOnLoadCallback does not accept an external parameter for the data passed in, we have to put that data
     //into a global variable which we can reference in that callback.
-
-    if (chartData.length) {
+   if (chartData.length > 10) {
         extData = CompileChartData(chartData);
-        google.load("visualization", "1", { packages: ["corechart"] });
-        google.setOnLoadCallback(drawChart);
+        google.setOnLoadCallback(drawChart());
     } else {
-
-
+        extData = chartData;
+        google.setOnLoadCallback(drawScatter());
     }
+
+
 }
 
 function drawScatter() {
+    var data = new google.visualization.DataTable();
 
-}
+    data.addColumn('string', '');
+    var evallength = 10;
+    for (var i = 0; i < evallength; i++) {
+        data.addColumn('number', '');
+    }
 
-//Render the chart with the data.
+    var labelArray = getLabels(extData);
+
+
+    labelArray.forEach(function (label) {
+        var semester = [];
+        extData.forEach(function (eval) {
+            if (label == eval.year + " - " + eval.semesterName) {
+                console.log(eval.score);
+                if (typeof eval.score == 'string')
+                {
+                    eval.score = parseFloat(eval.score);
+                }
+                semester.push(eval.score);
+            }
+        });
+        semester.sort();
+        for (i = semester.length; i < evallength; i++) {
+            semester.push(null);
+        }
+        semester.unshift(label);
+        data.addRow(semester);
+        console.log(semester);
+    });
+
+    //data.addRow(['Fall 2013', 1, null,null]);
+    //data.addRow(['Fall 2013', 3, 4,5]);
+
+    var options = {
+        width: 900,
+        height: 250,
+        legend: 'none',
+        orientation: 'vertical',
+        vAxis: { gridlines: { count: 3 } }
+    };
+
+    var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+    chart.draw(data, options);
+
+    /*document.getElementById('format-select').onchange = function() {
+      options['vAxis']['format'] = this.value;
+      chart.draw(data, options);
+    };*/
+};
+
+//Render the chart with the data for more than 10 items.
 function drawChart() {
     var data = google.visualization.arrayToDataTable(extData, true);
     var options = {
@@ -29,7 +78,8 @@ function drawChart() {
     var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
     chart.draw(data, options);
 }
-//
+
+//Compile Chart Data when there is more than 10 items
 function CompileChartData(objArray) {
 
     var labelArray = getLabels(objArray);
@@ -44,6 +94,9 @@ function CompileChartData(objArray) {
         array.forEach(function (eval) {
             label = eval.year + " - " + eval.semesterName;
             if (label == needle) {
+                if (typeof eval.score == 'string') {
+                    eval.score = parseFloat(eval.score);
+                }
                 scoreList.push(eval.score);
             }
         });
@@ -117,31 +170,27 @@ function getLabels(objArray) {
 
 // i use LoadChart to create the chart -- all of this would be implemented in another file.
 // i am using a temp variable, actually this would be passed in from the generating of the report.
-
-//var tempData = makeArray();
-//loadChart(tempData);
-//$(document).ready(function () {
-//    generateTable(tempData);
-//});
-
-
-
-
+/*
+var tempData = makeArray();
+loadChart(tempData);
+$(document).ready(function () {
+    generateTable(tempData);
+});
 
 function makeArray() {
     var objArray = [];
-    var semesterNames = ["", "Spring:", "Summer  :", "Fall:"];
+    var semesterNames = ["", "Spring:", "Summer:", "Fall:"];
 
-    for (var i = 0; i < 100 ; i++) {
+    for (var i = 0; i < 9 ; i++) {
         var randomNum = Math.floor((Math.random() * 3) + 1);
         var CRNNum = Math.floor((Math.random() * 90000) + 10000);
         var fancyObj = {
-            CRN: CRNNum,
-            Score: Math.random() * 4,
-            STDDev: (Math.random() * 1.5) + .5,
-            namRespondents: Math.floor((Math.random() * 20) + 1),
+            crn: CRNNum,
+            score: Math.random() * 4,
+            stddev: (Math.random() * 1.5) + .5,
+            totalRespondents: Math.floor((Math.random() * 20) + 1),
             semesterNum: randomNum,
-            semester: semesterNames[randomNum],
+            semesterName: semesterNames[randomNum],
             className: "CS" + CRNNum,
             year: Math.floor((Math.random() * 3) + 2013)
         }
@@ -149,3 +198,4 @@ function makeArray() {
     }
     return objArray;
 }
+*/
