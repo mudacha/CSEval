@@ -54,7 +54,7 @@ function startGraph()
 			$.each(data.DATA, function(i, array)
 			{
 				dataArray = toKeyValPair(data.COLUMNS, array);	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
-				tableObject = {marker:dataArray["MARKER"], course:dataArray["COURSE"], instructor:dataArray["INAME"], score:dataArray["INSTRUCTORAVERAGE"]};
+				tableObject = {marker:dataArray["MARKER"], course:dataArray["COURSE"], instructor:dataArray["INAME"], score:dataArray["INSTRUCTORAVERAGE"], semester:dataArray["SEMESTER"],year:dataArray["YEAR"]};
 				graphObjectArray.push(tableObject);
 			});
 
@@ -65,35 +65,41 @@ function startGraph()
 			barGraph();
 		}
 	});
+
 	//var graphObjectArray = new Array();//[graphObject, graphObject2, graphObject3, graphObject4, graphObject5, graphObject6, graphObject7, graphObject8, graphObject9];
 	
 	//generate random markers to use as mock data. 
 	// for (var i = 0; i < 200; i++)
 	// {
-		// var tempScore = (Math.random() * 4);
-		// var tempMarker;
+	//	 var tempScore = (Math.random() * 4);
+	//	 var tempMarker;
 		
-		// var tempColor = (Math.random() * 50).toFixed(0);
+	//	 var tempColor = (Math.random() * 50).toFixed(0);
 		
-		// if (tempColor == 0)
-		// {
-			// tempMarker = "red";
-		// }
-		// else if (tempColor == 1)
-		// {
-			// tempMarker = "green";
-		// }
-		// else if (tempColor >= 2)
-		// {
-			// tempMarker = "blue";
-		// }
+	//	 if (tempColor == 0)
+	//	 {
+	//		 tempMarker = "red";
+	//	 }
+	//	 else if (tempColor == 1)
+	//	 {
+	//		 tempMarker = "green";
+	//	 }
+	//	 else if (tempColor >= 2)
+	//	 {
+	//		 tempMarker = "blue";
+	//	 }
 		
-		// //assign info to an object with mock data
-		// var tempObject = {marker:tempMarker, course:"CS 1400", instructor:"Peterson, Brad", score:tempScore.toFixed(4)};
-		// graphObjectArray.push(tempObject);
+
+	//	 //assign info to an object with mock data
+	//	 var tempObject = {marker:tempMarker, course:"CS 1400", instructor:"Peterson, Brad", score:tempScore.toFixed(4), year:2013, semester: 2};
+	//	 graphObjectArray.push(tempObject);
 	// }
 	
-	
+	//graphObjectArray.sort(function (a, b) {
+	//    return a.score - b.score
+	//})
+
+	//barGraph();
 	
 
 }
@@ -158,20 +164,70 @@ function createResults()
 				zindex = getColorZIndex(color);
 			}
 		}
-		
+		var semester = null;
+		var year = null;
+
+		if (graphObjectArray[i].semester != null && graphObjectArray[i].year != null)
+		{
+		    var semesterNum = parseInt(graphObjectArray[i].semester);
+		    year = parseInt(graphObjectArray[i].year);
+		    switch (semesterNum)
+		    {
+		        case 1:
+		            semester = "Summer";
+		            year--;
+		            break;
+		        case 2:
+		            semester = "Fall";
+		            year--;
+		            break;
+		        case 3:
+		            semester = "Spring";
+		            break;
+		    }
+		    
+
+		}
+
+
 		if (graphObjectArray[i]["score"] >= leftBound && graphObjectArray[i]["score"] <= rightBound)
 		{
 			if (graphObjectArray[i]["marker"] == "red")
 			{
-			    graphData.innerHTML += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/RedPinSmall.png'>";
+			    if (graphObjectArray[i].semester != null && graphObjectArray[i].year != null)
+			    {
+			        graphData.innerHTML += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + " - " + semester + " " + year + ": " + graphObjectArray[i]["score"] + "' src = 'images/RedPinSmall.png'>";
+			    }
+			    else
+			    {
+
+			        graphData.innerHTML += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/RedPinSmall.png'>";
+			    }
+			    
 			}
 			else if (graphObjectArray[i]["marker"] == "green")
 			{
-			    graphData.innerHTML += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/GreenPinSmall.png'>";
+			    if (graphObjectArray[i].semester != null && graphObjectArray[i].year != null)
+			    {
+			        graphData.innerHTML += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + " - " + semester + " " + year + ": " + graphObjectArray[i]["score"] + "' src = 'images/GreenPinSmall.png'>";
+			    }
+			    else
+			    {
+			        graphData.innerHTML += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/GreenPinSmall.png'>";
+			    }
+			    
 			}
 			else if (graphObjectArray[i]["marker"] == "blue")
 			{
-			    graphData.innerHTML += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/BluePinSmall.png'>";
+			    if (graphObjectArray[i].semester != null && graphObjectArray[i].year != null)
+			    {
+			        graphData.innerHTML += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + " - " + semester + " " + year + ": " + graphObjectArray[i]["score"] + "' src = 'images/BluePinSmall.png'>";
+			    }
+			    else
+			    {
+			        graphData.innerHTML += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/BluePinSmall.png'>";
+			    }
+			    
 			}
 		}
 	}
@@ -371,20 +427,64 @@ function regenerate()
 				zindex = getColorZIndex(color);
 			}
 		}
-		
+		var semester = null;
+		var year = null;
+
+		if (graphObjectArray[i].semester != null && graphObjectArray[i].year != null) {
+		    var semesterNum = parseInt(graphObjectArray[i].semester);
+		    year = parseInt(graphObjectArray[i].year);
+		    switch (semesterNum) {
+		        case 1:
+		            semester = "Summer";
+		            year--;
+		            break;
+		        case 2:
+		            semester = "Fall";
+		            year--;
+		            break;
+		        case 3:
+		            semester = "Spring";
+		            break;
+		    }
+
+
+		}
+
 		if (graphObjectArray[i]["score"] >= leftBound && graphObjectArray[i]["score"] <= rightBound)
 		{
 			if (graphObjectArray[i]["marker"] == "red")
 			{
-				newChart+="<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/RedPinSmall.png'>";
+			    if (graphObjectArray[i].semester != null && graphObjectArray[i].year != null)
+			    {
+			        newChart += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + " - " + semester + " " + year + ": " + graphObjectArray[i]["score"] + "' src = 'images/RedPinSmall.png'>";
+			    }
+			    else {
+			        newChart += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/RedPinSmall.png'>";
+			    }
+				
 			}
 			else if (graphObjectArray[i]["marker"] == "green")
 			{
-				newChart+="<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/GreenPinSmall.png'>";
+			    if (graphObjectArray[i].semester != null && graphObjectArray[i].year != null)
+			    {
+			        newChart += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + " - " + semester + " " + year + ": " + graphObjectArray[i]["score"] + "' src = 'images/GreenPinSmall.png'>";
+			    }
+			    else
+			    {
+			        newChart += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/GreenPinSmall.png'>";
+			    }
+				
 			}
 			else if (graphObjectArray[i]["marker"] == "blue")
 			{
-				newChart+="<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/BluePinSmall.png'>";
+			    if (graphObjectArray[i].semester != null && graphObjectArray[i].year != null)
+			    {
+			        newChart += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + " - " + semester + " " + year + ": " + graphObjectArray[i]["score"] + "' src = 'images/BluePinSmall.png'>";
+			    }
+			    else {
+			        newChart += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/BluePinSmall.png'>";
+			    }
+				
 			}
 		}
 	}
@@ -444,9 +544,9 @@ function nearestHalf(value)
 	return value
 }
 
-window.onload = function()
+/*window.onload = function()
 	{
 	//document.getElementByID("zoomin").onmousedown = zoomIn();
 	//document.getElementByID("zoomin").onmouseup = endAction();
-	}
+	}*/
 
