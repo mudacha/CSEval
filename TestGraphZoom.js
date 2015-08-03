@@ -46,7 +46,6 @@ function startGraph()
 	    url: 'Ranking.cshtml?instructorID=887999808&semester=2&year=2014',
 		type: "GET",
 		dataType: "json",
-		async: false,
 		success:function(data)
 		{
 			var dataArray;
@@ -58,6 +57,12 @@ function startGraph()
 				tableObject = {marker:dataArray["MARKER"], course:dataArray["COURSE"], instructor:dataArray["INAME"], score:dataArray["INSTRUCTORAVERAGE"]};
 				graphObjectArray.push(tableObject);
 			});
+
+			graphObjectArray.sort(function (a, b) {
+			    return a.score - b.score
+			})
+
+			barGraph();
 		}
 	});
 	//var graphObjectArray = new Array();//[graphObject, graphObject2, graphObject3, graphObject4, graphObject5, graphObject6, graphObject7, graphObject8, graphObject9];
@@ -89,61 +94,47 @@ function startGraph()
 	// }
 	
 	
-	graphObjectArray.sort(function(a, b)
-	{
-		return a.score - b.score
-	})
 	
-	barGraph();
 
 }
 
 
 function barGraph()
 {
-	
+
 	//MAIN TABLE AND FIRST SELECTION OF DATA
-	document.write("<h2 style='margin:auto;text-align:center;'>Computer Science CS 1400 to CS 2400</h2>")
-	document.write("<table class='tablegraph' id = 'tableid' align='center'>" );
-	document.write("<tr></tr>");
-	//function that puts in the results part of the table. This is reused for the zoom feature so it's being used as a function
 	createResults();	
-	document.write("<tr></tr></table>");
-	document.write("</div></td></tr>");
-	document.write("<table align='center'><tr>");
-	document.write("<td colspan = '9'>");
-	document.write("<input type='image' src='images/Arrows-Back-icon.png' width ='20px' height='20px' onmousedown=leftClick() onmouseup=endLeftClick() ondragend=endLeftClick() id = 'leftclick'/></td>");
-	document.write("<td><input type='image' src='images/Very-Basic-Plus-icon.png' width ='20px' height='20px'  onmousedown=zoomIn() onmouseup=endZoomIn() ondragend=endZoomIn() id = 'zoomin'/></td>");
-	document.write("<td><input type='image' src='images/Very-Basic-Minus-icon.png' width ='20px' height='20px' onmousedown=zoomOut() onmouseup=endZoomOut() ondragend=endZoomOut() id = 'zoomout'/></td>");
-	document.write("<td><input type='image' src='images/Arrows-Back-greater-than.png' width ='20px' height='20px' onmousedown=rightClick() onmouseup=endRightClick() ondragend=endRightClick() id = 'rightclick' /></td>");
-	document.write("</tr></table>");
-	
-	//LEGEND FOR MAIN TABLE
-	document.write("<table align='center'><tr><td colspan = '9' width = '900px'>Legend:</td>");
-	document.write("<tr><td style='vertical-align:top'><img src = 'images/LegendSquare-Red.png'>Sections you teach.</td></tr>");
-	document.write("<tr><td class='legendrow' style='vertical-align:top'><img src = 'images/LegendSquare-Green.png'>Other sections you can view.</td></tr>");
-	document.write("<tr><td style='vertical-align:top'><img src = 'images/LegendSquare-Blue.png'>Sections you cannot view.</td></tr>");
-	document.write("</tr></table>");
 	
 }
 //Function that puts the graph results on the bar graph
 function createResults()
 {
-
-	document.write("<tr id = 'mainrow' align = 'center'><td colspan = '9' width = '900px' >");
-	document.write("<img src='images/blackbar.png' style='padding-left: 7px;' height = '55%' width='100%' id='graphimage'>");
+    var html = "";
+    var mainRow = document.getElementById('mainrow');
+    //html += "<tr id = 'mainrow' align = 'center'><td colspan = '9' width = '900px' >";
+    html += "<td colspan = '9' width = '900px' >";
+    html += "<img src='images/blackbar.png' style='padding-left: 7px;' height = '55%' width='100%' id='graphimage'>";
 	
 	var startIndex = 0;	//START THE NUMBER LINE
 
-	document.write("<div style = 'position:relative;'>");
-		var top = -99;
-		var zindex = 15;
+	html += "<div id='graphData' style = 'position:relative;'>";
+
+	var top = -99;
+	var zindex = 15;
 	
 	for (var i = leftBound; i <= rightBound; i = i + .5)
 	{
-		document.write("<img style='position: absolute; z-index: " + zindex + "; left:" + (((((i - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + (top + 40) + "px;' src = 'images/blacktick.png'>");
+	    html += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((i - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + (top + 40) + "px;' src = 'images/blacktick.png'>";
 	}
 	
+	html += "</div></td>";
+
+
+	mainRow.innerHTML = html;
+	html = "";
+
+	var graphData = document.getElementById('graphData');
+
 	for(i = 0; i < graphObjectArray.length; i++)
 	{
 	    var color = graphObjectArray[i].marker;
@@ -172,15 +163,15 @@ function createResults()
 		{
 			if (graphObjectArray[i]["marker"] == "red")
 			{
-				document.write("<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/RedPinSmall.png'>");
+			    graphData.innerHTML += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/RedPinSmall.png'>";
 			}
 			else if (graphObjectArray[i]["marker"] == "green")
 			{
-				document.write("<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/GreenPinSmall.png'>");
+			    graphData.innerHTML += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/GreenPinSmall.png'>";
 			}
 			else if (graphObjectArray[i]["marker"] == "blue")
 			{
-				document.write("<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/BluePinSmall.png'>");
+			    graphData.innerHTML += "<img style='position: absolute; z-index: " + zindex + "; left:" + (((((graphObjectArray[i]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top: " + top + "px;'  title='" + graphObjectArray[i]["instructor"] + " - " + graphObjectArray[i]["course"] + ": " + graphObjectArray[i]["score"] + "' src = 'images/BluePinSmall.png'>";
 			}
 		}
 	}
@@ -190,15 +181,15 @@ function createResults()
 	//CALCULATE AND POSITION LEFTMOST DATAPOINT ("LOW")
 	if (graphObjectArray[0]["score"] >= leftBound && graphObjectArray[0]["score"] <= rightBound)
 	{
-		document.write("<img style='position: absolute;	left:" + (((((graphObjectArray[0]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top:" + (top2 + 70) + "px;'  title='Low Score' src = 'images/PointPinSmall.png'>");
-		document.write("<div id = 'lowLabel' style='position: absolute; left:" + ((((((graphObjectArray[0]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) - (2.5)) +  "%; top:" + (top2 + 140) + "px;'>Low</div>");
+	    graphData.innerHTML += "<img style='position: absolute;	left:" + (((((graphObjectArray[0]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top:" + (top2 + 70) + "px;'  title='Low Score' src = 'images/PointPinSmall.png'>";
+	    graphData.innerHTML += "<div id = 'lowLabel' style='position: absolute; left:" + ((((((graphObjectArray[0]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) - (2.5)) + "%; top:" + (top2 + 140) + "px;'>Low</div>";
 	}
 		
 	//CALCULATE AND POSITION RIGHTMOST DATAPOINT ("HIGH")
 	if (graphObjectArray[graphObjectArray.length - 1]["score"] >= leftBound && graphObjectArray[graphObjectArray.length - 1]["score"] <= rightBound)
 	{
-		document.write("<img style='position: absolute;	left:"  + (((((graphObjectArray[graphObjectArray.length - 1]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound)))+ "%; top:" + (top2 + 70) + "px;'  title='High Score' src = 'images/PointPinSmall.png'>");
-		document.write("<div id = 'highLabel' style='position: absolute; left:"  + (((((graphObjectArray[graphObjectArray.length - 1]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound)) + (1.0)) + "%; top:" + (top2 + 140) + "px;'>High</div>");
+	    graphData.innerHTML += "<img style='position: absolute;	left:" + (((((graphObjectArray[graphObjectArray.length - 1]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top:" + (top2 + 70) + "px;'  title='High Score' src = 'images/PointPinSmall.png'>";
+	    graphData.innerHTML += "<div id = 'highLabel' style='position: absolute; left:" + (((((graphObjectArray[graphObjectArray.length - 1]["score"] - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound)) + (1.0)) + "%; top:" + (top2 + 140) + "px;'>High</div>";
 	}
 		
 	//CALCULATE AND POSITION MIDDLEMOST DATAPOINT ("MEDIAN")
@@ -214,18 +205,21 @@ function createResults()
 	
 	if (median >= leftBound && median <= rightBound)
 	{
-		document.write("<img id = 'medImage' style='position: absolute;	left:" + (((((median - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top:" + (top2 + 70) + "px;'  title='Median' src = 'images/PointPinSmall.png'>");
+	    graphData.innerHTML += "<img id = 'medImage' style='position: absolute;	left:" + (((((median - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%; top:" + (top2 + 70) + "px;'  title='Median' src = 'images/PointPinSmall.png'>";
 		if ((document.getElementById('medImage').offsetLeft - document.getElementById('lowLabel').offsetLeft < 40) || (document.getElementById('highLabel').offsetLeft - document.getElementById('medImage').offsetLeft < 40))
-			document.write("<div style='position: absolute; left:" + (((((median * 225) / 900) * 100) * (4 / (rightBound - leftBound))) - 1.7) + "%; top:" + (top2 + 160) + "px; text-align:center'>Median</div>");
+		    graphData.innerHTML += "<div style='position: absolute; left:" + (((((median * 225) / 900) * 100) * (4 / (rightBound - leftBound))) - 1.7) + "%; top:" + (top2 + 160) + "px; text-align:center'>Median</div>";
 		else
-			document.write("<div style='position: absolute; left:" + (((((median * 225) / 900) * 100) * (4 / (rightBound - leftBound))) - 1.7) + "%; top:" + (top2 + 140) + "px; text-align:center'>Median</div>");
+		    graphData.innerHTML += "<div style='position: absolute; left:" + (((((median * 225) / 900) * 100) * (4 / (rightBound - leftBound))) - 1.7) + "%; top:" + (top2 + 140) + "px; text-align:center'>Median</div>";
 	}
 	
 	//GENERATE NUMBER LINE
 	for (var i = leftBound; i <= rightBound ; i = i + .5)
 	{
-		document.write("<div style = 'position: absolute; top:0px; left:" + (((((i - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%;'>" + (startIndex + i).toFixed(1) + "</div>");
+	    graphData.innerHTML += "<div style = 'position: absolute; top:0px; left:" + (((((i - leftBound) * 225) / 900) * 100) * (4 / (rightBound - leftBound))) + "%;'>" + (startIndex + i).toFixed(1) + "</div>";
 	}
+
+	//graphData.innerHTML = html;
+    //return html;
 
 }
 
