@@ -49,7 +49,7 @@ function getAnswerLength(answerCount, currentTotal) {
 
 //ESSAY QUERY FUNCTION*************************************************************************************************************************************************
 function essayQuery(element, crn, semester, year) {
-    //jQuery.getJSON('/misc/weber/CSEvals/essayAnswers.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
+    //jQuery.getJSON('/misc/weber/CSEvals/essayAnswers.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data)
     jQuery.getJSON('EssayAnswers.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data) {
         if (currentElement != element) {
             return;
@@ -287,7 +287,7 @@ function titleQuery(element, crn, semester, year) {
 	            }
 	            else				//RETREIVE AND UTILIZE TITLE DATA
 	            {
-	                
+
 	                $.each(data.DATA, function (i, array) {
 	                    var dataArray = toKeyValPair(data.COLUMNS, String(array).split(','));	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
 	                    element.semesterName = dataArray['SEMESTERSTRING'];
@@ -300,7 +300,7 @@ function titleQuery(element, crn, semester, year) {
 	                        dataArray['YEAR'] -= 1; //Set the year back one
 	                        element.year = dataArray['YEAR'];
 	                    }
-	                    
+
 	                    $(element).find("#title_wrapper").append('<h2>Course Evaluation</h2>' + dataArray['FIRSTNAME'] + ' ' + dataArray['LASTNAME'] + ' - ' + dataArray['CLASSSTRING'] + ' - CRN ' + dataArray['BANNERCRN'] + ' - ' + dataArray['SEMESTERSTRING'] + ' ' + dataArray['YEAR'] + '');
 	                });
 	            }
@@ -322,14 +322,14 @@ function titleQuery(element, crn, semester, year) {
 function topQuery(element, crn, semester, year) {
     $(element).find("#StatisticsWrapper").hide();
 
-    //jQuery.getJSON('/misc/weber/CSEvals/CrnStatistics.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
+    //jQuery.getJSON('/misc/weber/CSEvals/CrnStatistics.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data)
     jQuery.getJSON('CrnStatistics.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data) {
         if (currentElement != element) {
             return;
         }
         try {
 
-            
+
             var keyValPair = toKeyValPair(data.COLUMNS, String(data.DATA).split(','));
 
             element.score = Number(keyValPair['CLASSSCORE']).toFixed(2);
@@ -408,7 +408,7 @@ function detailsTop(element, crn, semester, year, clickedButton) {
     }
     originalDiv.addClass("Already_Expanded");
     $(element).find("#top_detail").before('<p class="loadinggif">Calculating...</p></br><img class="loadinggif" src=".\\images\\ajax-loader.gif" "/>');
-    //jQuery.get('/misc/weber/CSEvals/CrnStatistics.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data) 
+    //jQuery.get('/misc/weber/CSEvals/CrnStatistics.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data)
     jQuery.get('CrnStatistics.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data) {
         if (currentElement != element) {
             return;
@@ -421,7 +421,7 @@ function detailsTop(element, crn, semester, year, clickedButton) {
         $.each(data.DATA, function (i, array) {
             var crnStatistics2 = toKeyValPair(data.COLUMNS, String(data.DATA).split(','));
 
-            //jQuery.get('/misc/weber/CSEvals/ScoreByCategory.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data2) 
+            //jQuery.get('/misc/weber/CSEvals/ScoreByCategory.cfm?crn='+crn+'&semester='+semester+'&year='+year, function(data2)
             jQuery.get('ScoreByCategory.cshtml?crn=' + crn + '&semester=' + semester + '&year=' + year, function (data2) {
                 statsTableString = statsTableString + ''
                 $.each(data2.DATA, function (i, array2) {
@@ -1075,7 +1075,7 @@ divHTML = "<div class=\"wrapper\">\r\n\t\r\n\t\t<div class=\"title\" id=\"title_
 
     errorCRN = [];
 
-    
+
     var tempArray = [];
 
     for (var i = 0; i < crnArray.length; i++) {
@@ -1105,7 +1105,7 @@ divHTML = "<div class=\"wrapper\">\r\n\t\r\n\t\t<div class=\"title\" id=\"title_
 
         $('#crnErrors').append(errorCRN[e] + ' is not a valid CRN <br/>');
     }
-    
+
 
 
     var loadingStatus = document.createElement('div');
@@ -1139,7 +1139,7 @@ window.onload = function () {
 
     });
 
-    /*
+
     var data = JSON.parse('{"COLUMNS":["SECTIONID","SEMESTER","YEAR","BANNERCRN"],"DATA":[[192511,3,2013,30611],[194320,3,2013,33035],[194334,3,2013,33045],[194386,3,2013,33108],[195899,3,2013,34455],[197540,1,2014,10639],[197547,1,2014,10669],[197562,1,2014,10641],[198536,2,2014,20949],[201578,2,2014,23750],[201580,2,2014,23768],[201601,2,2014,23793],[204884,3,2014,31151],[206605,3,2014,32940],[206638,3,2014,32962],[206657,3,2014,32945],[211219,1,2015,11197],[211220,1,2015,11198],[211336,1,2015,11232],[211592,2,2015,21584],[212676,2,2015,22599],[212796,2,2015,22564],[212797,2,2015,22574],[219457,3,2015,33274],[219622,3,2015,33296],[219655,3,2015,33269]]}');
 
     crnArray = [];
@@ -1156,11 +1156,11 @@ window.onload = function () {
     });
 
     loadCRNData(crnArray);
-    */
+
 };
 function loadCRNData(crnArray)
 {
-    
+
     errorCRN = [];
 
 
