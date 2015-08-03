@@ -14,6 +14,29 @@ function toKeyValPair(names, values)
 	}
 	return result;
 }
+function sortColors(a,b)
+{
+    var colorValueA = getColorValue(a[1]);
+    var colorValueB = getColorValue(b[1]);
+
+    return colorValueA - colorValueB;
+
+}
+
+
+function getColorZIndex(color)
+{
+    if (color === "red") {
+        return 40;
+    }
+    else if (color === "green") {
+        return 25;
+    }
+
+    else {
+        return 15;
+    }
+}
 
 function startGraph()
 {
@@ -28,6 +51,7 @@ function startGraph()
 		{
 			var dataArray;
 			var tableObject;
+
 			$.each(data.DATA, function(i, array)
 			{
 				dataArray = toKeyValPair(data.COLUMNS, array);	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
@@ -122,10 +146,16 @@ function createResults()
 	
 	for(i = 0; i < graphObjectArray.length; i++)
 	{
+	    var color = graphObjectArray[i].marker;
+
+	    zindex = getColorZIndex(color);
 
 		if (i != 0)
 		{
-			if (graphObjectArray[i - 1]["score"] == graphObjectArray[i]["score"])
+		    
+
+
+		    if (graphObjectArray[i - 1]["score"] == graphObjectArray[i]["score"])
 			{
 				top -= 8;
 				zindex -= 1;
@@ -133,7 +163,8 @@ function createResults()
 			else
 			{
 				top = -99;
-				zindex = 15;
+		        //zindex = 15;
+				zindex = getColorZIndex(color);
 			}
 		}
 		
@@ -329,6 +360,8 @@ function regenerate()
 	
 	for(i = 0; i < graphObjectArray.length; i++)
 	{
+	    var color = graphObjectArray[i].marker;
+	    zindex = getColorZIndex(color);
 
 		if (i != 0)
 		{
@@ -341,6 +374,7 @@ function regenerate()
 			{
 				top = -99;
 				zindex = 15;
+				zindex = getColorZIndex(color);
 			}
 		}
 		
