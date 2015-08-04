@@ -59,10 +59,12 @@ function startGraph()
 			});
 
 			graphObjectArray.sort(function (a, b) {
-			    return a.score - b.score
+			    return a.score - b.score;
 			})
 
 			barGraph();
+
+			generateScoreTable(graphObjectArray);
 		}
 	});
 
@@ -544,6 +546,64 @@ function nearestHalf(value)
 	return value
 }
 
+
+function generateScoreTable(scoreArray)
+{
+    var table = document.getElementById('tabularScores');
+
+    scoreArray.sort(function (a, b) {
+       return b.score - a.score;
+    });
+
+    if(!table)
+    {
+        return;
+    }
+
+    
+    var html = "";
+
+    html += "<tr>";
+    html += "<th>Key</th>"
+    html += "<th>Class</th>";
+    html += "<th>Instructor</th>";
+    html += "<th>Semester</th>";
+    html += "<th>Score</th>";
+    html += "</tr>";
+
+    for (var i = 0; i < scoreArray.length; i++)
+    {
+        var semester = "";
+        var semesterNum = parseInt(scoreArray[i].semester);
+        year = parseInt(scoreArray[i].year);
+        switch (semesterNum) {
+            case 1:
+                semester = "Summer";
+                year--;
+                break;
+            case 2:
+                semester = "Fall";
+                year--;
+                break;
+            case 3:
+                semester = "Spring";
+                break;
+        }
+
+
+        html += "<tr>";
+        html += "<td style=background-color:"+scoreArray[i].marker +"></td>";
+        html += "<td>" + scoreArray[i].course + "</td>";
+        html += "<td>" + scoreArray[i].instructor + "</td>";
+        html += "<td>" + semester + " " + scoreArray[i].year + "</td>";
+        html += "<td>" + scoreArray[i].score.toFixed(2) + "</td>";
+    }
+
+
+
+    table.innerHTML += html;
+        
+}
 /*window.onload = function()
 	{
 	//document.getElementByID("zoomin").onmousedown = zoomIn();

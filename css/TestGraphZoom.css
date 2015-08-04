@@ -55,3 +55,13 @@ left: 35px;
 	
 	border-collapse: collapse;
 }
+
+#tabularScores{
+    border: 1px black;
+    border-style: solid;
+    width: 500px;
+}
+
+#tabularScores tr{
+    text-align:center;
+}
