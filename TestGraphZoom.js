@@ -595,7 +595,7 @@ function generateScoreTable(scoreArray)
         html += "<td style=background-color:"+scoreArray[i].marker +"></td>";
         html += "<td>" + scoreArray[i].course + "</td>";
         html += "<td>" + scoreArray[i].instructor + "</td>";
-        html += "<td>" + semester + " " + scoreArray[i].year + "</td>";
+        html += "<td>" + semester + " " + year + "</td>";
         html += "<td>" + scoreArray[i].score.toFixed(2) + "</td>";
     }
 
