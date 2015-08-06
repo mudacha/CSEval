@@ -905,7 +905,8 @@ function onErrorQueries(wrapperElement) {
     wrapperElement["TITLEQUERY"] = false;
     wrapperElement["FAILED"] = true;
     elementList.pop();
-    $('#crnErrors').append(wrapperElement.crn + ' is an invalid CRN<br />');
+    $('#crnErrors').append('CRN - ' + wrapperElement.crn + '| Semester - ' + wrapperElement.semesterNum + '| Year - ' + wrapperElement.year + '  is an invalid '
+        + 'class<br />');
     $('#footer' + wrapperElement.crn).remove();
     $(wrapperElement).remove();
 
@@ -1018,6 +1019,7 @@ function addToReport(CRN, Semester, Year) {
     element.id = "class" + CRN + "-" + Semester + "-" + Year;
     element.crn = CRN;
     element.semesterNum = Semester;
+    element.year = Year;
     elementList.push(element);
     //element.outerHTML = divHTML;
     currentElement = element;
