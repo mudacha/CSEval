@@ -574,11 +574,11 @@ function generateScoreTable(scoreArray)
     var html = "";
 
     html += "<tr>";
-    html += "<th onclick='setTimeout(0,sortKey());'>Key</th>"
-    html += "<th onclick='setTimeout(0,sortClassName());'>Class</th>";
-    html += "<th onclick='setTimeout(0,sortInstructor());'>Instructor</th>";
-    html += "<th onclick='setTimeout(0,sortSemester());'>Semester</th>";
-    html += "<th onclick='setTimeout(0,sortScore());'>Score</th>";
+    html += "<th class='sortableHeader' onclick='setTimeout(0,sortKey());'>Key</th>"
+    html += "<th class='sortableHeader' onclick='setTimeout(0,sortClassName());'>Class</th>";
+    html += "<th class='sortableHeader' onclick='setTimeout(0,sortInstructor());'>Instructor</th>";
+    html += "<th class='sortableHeader' onclick='setTimeout(0,sortSemester());'>Semester</th>";
+    html += "<th class='sortableHeader' onclick='setTimeout(0,sortScore());'>Score</th>";
     html += "</tr>";
 
     for (var i = 0; i < scoreArray.length; i++)
