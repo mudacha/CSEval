@@ -56,6 +56,7 @@ function drawScatter() {
         height: 250,
         legend: 'none',
         orientation: 'vertical',
+        colors:['blue'],
         vAxis: { gridlines: { count: 3 } }
     };
 
