@@ -4,6 +4,8 @@ var rightBound = 4.00;
 var leftScale = 0.00;
 var rightScale = 4.00;
 var graphObjectArray = new Array();
+var tableSort = "";
+var tableData = null;
 
 function toKeyValPair(names, values)
 {
@@ -40,68 +42,78 @@ function getColorZIndex(color)
 
 function startGraph()
 {
-	$.ajax(
-	{
-	    //url: '/misc/weber/CSEvals/ranking.cfm',
-	    url: 'Ranking.cshtml?instructorID=887999808&semester=2&year=2014',
-		type: "GET",
-		dataType: "json",
-		success:function(data)
-		{
-			var dataArray;
-			var tableObject;
+	//$.ajax(
+	//{
+	//    //url: '/misc/weber/CSEvals/ranking.cfm',
+	//    url: 'Ranking.cshtml?instructorID=887999808&semester=2&year=2014',
+	//	type: "GET",
+	//	dataType: "json",
+	//	success:function(data)
+	//	{
+	//		var dataArray;
+	//		var tableObject;
 
-			$.each(data.DATA, function(i, array)
-			{
-				dataArray = toKeyValPair(data.COLUMNS, array);	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
-				tableObject = {marker:dataArray["MARKER"], course:dataArray["COURSE"], instructor:dataArray["INAME"], score:dataArray["INSTRUCTORAVERAGE"], semester:dataArray["SEMESTER"],year:dataArray["YEAR"]};
-				graphObjectArray.push(tableObject);
-			});
+	//		$.each(data.DATA, function(i, array)
+	//		{
+	//			dataArray = toKeyValPair(data.COLUMNS, array);	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
+	//			tableObject = {marker:dataArray["MARKER"], course:dataArray["COURSE"], instructor:dataArray["INAME"], score:dataArray["INSTRUCTORAVERAGE"], semester:dataArray["SEMESTER"],year:dataArray["YEAR"]};
+	//			graphObjectArray.push(tableObject);
+	//		});
 
-			graphObjectArray.sort(function (a, b) {
-			    return a.score - b.score;
-			})
+	//		graphObjectArray.sort(function (a, b) {
+	//		    return a.score - b.score;
+	//		})
 
-			barGraph();
+	//		barGraph();
 
-			generateScoreTable(graphObjectArray);
-		}
-	});
+	//		tableData = graphObjectArray;
+
+	//		graphObjectArray.sort(function (a, b) {
+	//		    return b.score - a.score;
+	//		});
+	//		generateScoreTable(graphObjectArray);
+	//	}
+	//});
 
 	//var graphObjectArray = new Array();//[graphObject, graphObject2, graphObject3, graphObject4, graphObject5, graphObject6, graphObject7, graphObject8, graphObject9];
 	
 	//generate random markers to use as mock data. 
-	// for (var i = 0; i < 200; i++)
-	// {
-	//	 var tempScore = (Math.random() * 4);
-	//	 var tempMarker;
+	 for (var i = 0; i < 200; i++)
+	 {
+		 var tempScore = (Math.random() * 4);
+		 var tempMarker;
 		
-	//	 var tempColor = (Math.random() * 50).toFixed(0);
+		 var tempColor = (Math.random() * 50).toFixed(0);
+
+		 var semester = Math.floor((Math.random() * 3)) + 1;
+		 var year = Math.floor((Math.random() * 5)) + 2013;
 		
-	//	 if (tempColor == 0)
-	//	 {
-	//		 tempMarker = "red";
-	//	 }
-	//	 else if (tempColor == 1)
-	//	 {
-	//		 tempMarker = "green";
-	//	 }
-	//	 else if (tempColor >= 2)
-	//	 {
-	//		 tempMarker = "blue";
-	//	 }
+		 if (tempColor == 0)
+		 {
+			 tempMarker = "red";
+		 }
+		 else if (tempColor == 1)
+		 {
+			 tempMarker = "green";
+		 }
+		 else if (tempColor >= 2)
+		 {
+			 tempMarker = "blue";
+		 }
 		
 
-	//	 //assign info to an object with mock data
-	//	 var tempObject = {marker:tempMarker, course:"CS 1400", instructor:"Peterson, Brad", score:tempScore.toFixed(4), year:2013, semester: 2};
-	//	 graphObjectArray.push(tempObject);
-	// }
+		 //assign info to an object with mock data
+		 var tempObject = {marker:tempMarker, course:"CS 1400", instructor:"Brad Peterson", score:tempScore, year:year, semester: semester};
+		 graphObjectArray.push(tempObject);
+	 }
 	
-	//graphObjectArray.sort(function (a, b) {
-	//    return a.score - b.score
-	//})
+	graphObjectArray.sort(function (a, b) {
+	    return a.score - b.score
+	})
+	tableData = graphObjectArray;
+	barGraph();
 
-	//barGraph();
+	generateScoreTable(tableData);
 	
 
 }
@@ -550,10 +562,8 @@ function nearestHalf(value)
 function generateScoreTable(scoreArray)
 {
     var table = document.getElementById('tabularScores');
-
-    scoreArray.sort(function (a, b) {
-       return b.score - a.score;
-    });
+    table.innerHTML = "";
+    
 
     if(!table)
     {
@@ -564,11 +574,11 @@ function generateScoreTable(scoreArray)
     var html = "";
 
     html += "<tr>";
-    html += "<th>Key</th>"
-    html += "<th>Class</th>";
-    html += "<th>Instructor</th>";
-    html += "<th>Semester</th>";
-    html += "<th>Score</th>";
+    html += "<th onclick='setTimeout(0,sortKey());'>Key</th>"
+    html += "<th onclick='setTimeout(0,sortClassName());'>Class</th>";
+    html += "<th onclick='setTimeout(0,sortInstructor());'>Instructor</th>";
+    html += "<th onclick='setTimeout(0,sortSemester());'>Semester</th>";
+    html += "<th onclick='setTimeout(0,sortScore());'>Score</th>";
     html += "</tr>";
 
     for (var i = 0; i < scoreArray.length; i++)
@@ -592,7 +602,7 @@ function generateScoreTable(scoreArray)
 
 
         html += "<tr>";
-        html += "<td style=background-color:"+scoreArray[i].marker +"></td>";
+        html += "<td style=background-color:" + scoreArray[i].marker +"></td>";
         html += "<td>" + scoreArray[i].course + "</td>";
         html += "<td>" + scoreArray[i].instructor + "</td>";
         html += "<td>" + semester + " " + year + "</td>";
@@ -604,9 +614,64 @@ function generateScoreTable(scoreArray)
     table.innerHTML += html;
         
 }
-/*window.onload = function()
-	{
-	//document.getElementByID("zoomin").onmousedown = zoomIn();
-	//document.getElementByID("zoomin").onmouseup = endAction();
-	}*/
 
+function sortScore()
+{
+    tableData.sort(function (a, b) {
+
+        return b.score - a.score;
+    });
+
+    generateScoreTable(tableData);
+}
+
+function sortInstructor()
+{
+    tableData.sort(function (a, b) {
+
+        if (a.instructor < b.instructor)
+            return -1;
+        if (a.instructor > b.instructor)
+            return 1;
+        else
+            return 0;
+    });
+
+    generateScoreTable(tableData);
+}
+
+function sortSemester()
+{
+
+    tableData.sort(function (a, b) {
+
+       
+        return parseInt("" + a.year + a.semester) - parseInt("" + b.year + b.semester);
+    });
+
+    generateScoreTable(tableData);
+
+}
+function sortClassName()
+{
+    tableData.sort(function (a, b) {
+
+        if (a.course < b.course)
+            return -1;
+        if (a.course > b.course)
+            return 1;
+        else
+            return 0;
+        
+    });
+    generateScoreTable(tableData);
+}
+
+function sortKey()
+{
+    tableData.sort(function (a, b) {
+        //we'll use getcolorzindex to help determine order when sorting by key
+        return getColorZIndex(b.marker) - getColorZIndex(a.marker);
+    });
+    generateScoreTable(tableData);
+}
