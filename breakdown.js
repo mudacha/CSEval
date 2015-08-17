@@ -866,11 +866,7 @@ function detailsQuery(element, crn, semester, year, questionId, clickedButton) {
 	return rs;
 }*/
 
-$(function () {
-    //$(document).delegate(".button", "click", function () { detailsQuery(currentElement,CRN, Semester, Year, $(this).siblings(".hiddenQuestionID").val(), this); });
-    //$(document).delegate(".tpbutton", "click", function () { detailsTop(currentElement,CRN, Semester, Year, this); });
 
-});
 
 function getURLParameter(name) {
     return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [, ""])[1].replace(/\+/g, '%20')) || null;
@@ -1042,20 +1038,7 @@ var CRN = 0;
 var Semester = 0;
 var Year = 0;
 
-/*var currentQuestion = " ";
-var currentSD = 0;
-var currentD = 0;
-var currentN = 0;
-var currentA = 0;
-var currentSA = 0;
-var currentNA = 0;
-var currentTotal = 0;
-var currentLengths = [];
-var finishedQuestions = [];
-var printedQuestions = [];
-var crnStatistics = [];
-var questionCollapserId = 0;
-var totalQuestions = 0;*/
+
 var questionJSON = {};
 var storedQuestions = {};
 
@@ -1064,112 +1047,18 @@ var totalRespondents = [];
 var totalBarLength = 400;
 var barHeight = 30;
 
-//CRN = getURLParameter('CRN');
-//crnArray = CRN.split(',');
-//crnArray = [];
-
 elementList = [];
 currentCRNIndex = 0;
-//CRN = parseInt(getURLParameter('CRN'));
-//Semester = parseInt(getURLParameter('Semester'));
-//Year = parseInt(getURLParameter('Year'));
-
 complete = false;
 
 currentElement = {};
 divHTML = "<div class=\"wrapper\">\r\n\t\r\n\t\t<div class=\"title\" id=\"title_wrapper\" style=\"margin:0px;padding:0px;\">\r\n\t\t\t<!-- course evaluation - cs1400 67877 spr 2013 -->\r\n\t\t<\/div>\r\n\t\t<div id=\"StatisticsWrapper\"><\/div>\r\n\t\t<div class=\"bar_divider\"><hr\/><\/div>\r\n\t\t<div class=\"legend_box\">\r\n\t\t\t<div class=\"legend_graph\">\r\n\t\t\t\t\r\n\t\t\t\t<div class=\"headingAndText\">\r\n\t\t\t\t\t<img id=\"barimage\" src=\"images\/colorStronglyDisagree.png\" >\t\r\n\t\t\t\t\t<p id = \"textDouble\">Strongly Disagree<\/p>\r\n\t\t\t\t<\/div>\r\n\r\n\t\t\t\t<div class=\"headingAndText\">\r\n\t\t\t\t\t<img id=\"barimage\" src=\"images\/colorDisagree.png\" >\t\r\n\t\t\t\t\t<p id = \"text\">Disagree<\/p>\r\n\t\t\t\t<\/div>\r\n\r\n\t\t\t\t<div class=\"headingAndText\">\r\n\t\t\t\t\t<img id=\"barimage\" src=\"images\/colorNeutral.png\" >\t\r\n\t\t\t\t\t<p id = \"text\">Neutral<\/p>\r\n\t\t\t\t<\/div>\r\n\t\t\t\t\r\n\t\t\t\t<div class=\"headingAndText\">\r\n\t\t\t\t\t<img id=\"barimage\" src=\"images\/colorAgree.png\" >\t\r\n\t\t\t\t\t<p id = \"text\">Agree<\/p>\r\n\t\t\t\t<\/div>\r\n\r\n\t\t\t\t<div class=\"headingAndText\">\r\n\t\t\t\t\t<img id=\"barimage\" src=\"images\/colorStronglyAgree.png\" >\t\r\n\t\t\t\t\t<p id = \"textDouble\">Strongly<br\/>Agree<\/p>\r\n\t\t\t\t<\/div>\r\n\t\t\t\t\r\n\t\t\t\t\r\n\t\t\t<\/div>\r\n\t\t<\/div>\r\n\r\n\t\r\n\t\t<div id=\"questions_wrapper\"><\/div>\r\n\t\t\r\n\t\t<div class=\"bar_divider\"><hr\/><\/div>\r\n\r\n\t\t<div id=\"EssayWrapper\"><\/div>\r\n\t\t\r\n\t\t<div class=\"footer\">\r\n\t\t\t&copy; 2014 Weber State University\r\n\t\t<\/div>\r\n  <\/div>";
 
-/*window.onload = (function () {
-
-    errorCRN = [];
-
-    
-    var tempArray = [];
-
-    for (var i = 0; i < crnArray.length; i++) {
-
-        crnData = crnArray[i].split('-');
-        if (crnData.length != 3) {
-            $('#crnErrors').append(crnArray[i] + ' is not in a valid parameter format <br/>');
-            break;
-        }
-
-        if (crnData[0].length != 5) {
-            errorCRN.push(crnArray[i]);
-            break;
-        }
-        else if (isNaN(crnData[0])) {
-            errorCRN.push(crnArray[i]);
-            break;
-        }
-
-        tempArray.push(crnData);
-
-    }
-
-    crnArray = tempArray;
-
-    for (var e = 0; e < errorCRN.length; e++) {
-
-        $('#crnErrors').append(errorCRN[e] + ' is not a valid CRN <br/>');
-    }
-    
 
 
-    var loadingStatus = document.createElement('div');
-    loadingStatus.id = "loadingstatus";
-    loadingStatus.innerHTML = '<p class="loadinggif">0 of ' + crnArray.length + ' classes</p></br><img class="loadinggif" src=".\\images\\ajax-loader.gif" "/>';
-    document.body.appendChild(loadingStatus);
-    nextCrn();
-});
-*/
-
-
-/*window.onload = function () {
-
-    instructorID = getURLParameter('instructorID');
-    // download instructor crn's
-    if (instructorID == null || instructorID == "" || instructorID == 0) {
-        jQuery.getJSON('/misc/weber/CSEvals/InstructorClassesTaught.cfm', function (data) {
-            crnArray = [];
-            if (data.DATA.length == 0) {
-                return;
-            }
-
-            $.each(data.DATA, function (i, array) {
-
-                var dataArray = toKeyValPair(data.COLUMNS, array);
-                crnArray.push(dataArray["BANNERCRN"] + "-" + dataArray["SEMESTER"] + "-" + dataArray["YEAR"]);
-
-
-            });
-
-            loadCRNData(crnArray);
-
-        });
-
-    }
-    else {
-        instructorID = parseInt(instructorID);
-        jQuery.getJSON('/misc/weber/CSEvals/InstructorClassesTaught.cfm' + '?instructorID=' + instructorID, function (data) {
-            crnArray = [];
-            if (data.DATA.length == 0) {
-                return;
-            }
-
-            $.each(data.DATA, function (i, array) {
-
-                var dataArray = toKeyValPair(data.COLUMNS, array);
-                crnArray.push(dataArray["BANNERCRN"] + "-" + dataArray["SEMESTER"] + "-" + dataArray["YEAR"]);
-
-
-            });
-
-            loadCRNData(crnArray);
-
-        });
-    }
-};
+/*
+*   Starts the breakdown report. It expects an array of strings in CRN-SEMESTERNUM-YEAR format
+*   Ex. 30611-3-2013
 */
 function loadCRNData(crnArray) {
 
