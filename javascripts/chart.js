@@ -13,6 +13,7 @@ function loadChart(chartData) {
     semesterLabels.forEach(function (semester) {
         var semesterEvals = [];
         chartData.forEach(function (eval) {
+
             if (semester == eval.year + " - " + eval.semesterName) {
                 console.log(eval.score);
                 semesterEvals.push(eval);
@@ -26,9 +27,11 @@ function loadChart(chartData) {
            var jSem =  $("#chart_div").append('<div id='+extSem+' class="singleSemester">&nbsp;</div>');
 
         if (semesterEvals.length > 10) {
+            console.log("chose Whis chart");
             extData = CompileChartData(chartData);
             google.setOnLoadCallback(drawChart());
         } else {
+            console.log("chose scatter chart");
             extData = chartData;
             google.setOnLoadCallback(drawScatter());
         }
@@ -36,36 +39,41 @@ function loadChart(chartData) {
 }
 
 function drawScatter() {
-    var data = new google.visualization.DataTable();
-    data.addColumn('string', '');
+
     var evallength = 10;
-    for (var i = 0; i < evallength; i++) {
-        data.addColumn('number', '');
-    }
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Semester Name');
 
-   // var labelArray = getLabels(extData);
-
-
-        var semester = [];
-        extData.forEach(function (eval) {
-            if (extSemName == eval.year + " - " + eval.semesterName) {
-                if (typeof eval.score == 'string')
-                {
-                    eval.score = parseFloat(eval.score);
-                }
-                semester.push(eval.score);
-            }
-        });
-
-        semester.sort();
-        for (i = semester.length; i < evallength; i++) {
-            semester.push(null);
+    extData.forEach(function (eval) {
+        if (extSemName == eval.year + " - " + eval.semesterName) {
+            data.addColumn('number', eval.className)
+            data.addColumn({type: 'string', label: 'Probe Details', role: 'tooltip', 'p': {'html': true}})
         }
-        semester.unshift(extSemName);
-        data.addRow(semester);
+    });
+    var semester = [];
+    extData.forEach(function (eval) {
+        if (extSemName == eval.year + " - " + eval.semesterName) {
+            if (typeof eval.score == 'string')
+            {
+                eval.score = parseFloat(eval.score);
+            }
+            semester.push(eval.score);
+            var tooltipText =
+                    'CRN: '+eval.crn+'<br>'+
+                    'Class Name: '+ eval.className+'<br>'+
+                    'Score: '+eval.score.toFixed(2)+'<br>'+
+                    'Std. Dev: '+ Number(eval.stddev).toFixed(2) + '<br>'+
+                    'Num Respondents: '+ eval.totalRespondents;
 
-    //data.addRow(['Fall 2013', 1, null,null]);
-    //data.addRow(['Fall 2013', 3, 4,5]);
+            semester.push(tooltipText)
+        }
+    });
+    for (i = semester.length; i < evallength; i++) {
+                semester.push(null);
+            }
+
+semester.unshift(extSemName);
+data.addRow(semester);
 
     var options = {
         legend: 'none',
@@ -74,11 +82,36 @@ function drawScatter() {
         vAxis: { gridlines: { count: 3 }},
         chartArea: {
             left: 100,
-        }
+        },
+        tooltip: {isHtml: true}
     };
 
     var chart = new google.visualization.ScatterChart(document.getElementById(extSem));
     chart.draw(data, options);
+
+    google.visualization.events.addListener(chart, 'select', selectHandler);
+        function selectHandler() {
+          var selection = chart.getSelection();
+          var message = '';
+          for (var i = 0; i < selection.length; i++) {
+            var item = selection[i];
+            if (item.row != null && item.column != null) {
+              var str = data.getFormattedValue(item.row, item.column);
+              message += '{row:' + item.row + ',column:' + item.column + '} = ' + str + '\n';
+            } else if (item.row != null) {
+              var str = data.getFormattedValue(item.row, 0);
+              message += '{row:' + item.row + ', column:none}; value (col 0) = ' + str + '\n';
+            } else if (item.column != null) {
+              var str = data.getFormattedValue(0, item.column);
+              message += '{row:none, column:' + item.column + '}; value (row 0) = ' + str + '\n';
+            }
+          }
+          if (message == '') {
+            message = 'nothing';
+          }
+          alert('You selected ' + message);
+        }
+
 
     /*document.getElementById('format-select').onchange = function() {
       options['vAxis']['format'] = this.value;
@@ -94,7 +127,8 @@ function drawChart() {
         orientation: 'vertical',
         chartArea: {
             left: 100,
-        }
+        },
+        tooltip: {isHtml: true, trigger: 'selection'},
     };
     var chart = new google.visualization.CandlestickChart(document.getElementById(extSem));
     chart.draw(data, options);
