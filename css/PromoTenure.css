@@ -1,4 +1,4 @@
-﻿.center{
+.center{
     text-align: center;
     display: block;
 }
@@ -34,11 +34,9 @@ ul.leaders span + span {
     padding-left: 0.33em;
     background: white}
 .graph{
-    height: 250px;
     border: 1px;
     border-color: black;
     border-style: solid;
-    width: 980px;
     margin: auto;
     margin-top:25px;
 }

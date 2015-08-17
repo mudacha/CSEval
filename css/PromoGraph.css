@@ -1,6 +1,8 @@
-﻿ #chart_div{
+ #chart_div{
             width: 900px;
-            height: 250px;
-            border: 1px green;
-            border-style: solid;
+            /* height: 250px; */
         }
+ .singleSemester{
+         height:60px;
+         width: 900px;
+}

@@ -1,37 +1,54 @@
-﻿var extData = null;
+var extData = null;
+var extSem = null;
+var extSemName = null;
+
 google.load("visualization", "1.1", { packages: ["corechart"] });
 //Setup and Calculate the info based on the input data.
 function loadChart(chartData) {
-    //because the setOnLoadCallback does not accept an external parameter for the data passed in, we have to put that data
-    //into a global variable which we can reference in that callback.
-   if (chartData.length > 10) {
-        extData = CompileChartData(chartData);
-        google.setOnLoadCallback(drawChart());
-    } else {
-        extData = chartData;
-        google.setOnLoadCallback(drawScatter());
-    }
+//parse the Chart Data into Semesters
+    var semesterLabels = [];
 
+    semesterLabels = getLabels(chartData);
 
+    semesterLabels.forEach(function (semester) {
+        var semesterEvals = [];
+        chartData.forEach(function (eval) {
+            if (semester == eval.year + " - " + eval.semesterName) {
+                console.log(eval.score);
+                semesterEvals.push(eval);
+            }
+        });
+        console.log("Semester Evan Num: " + semesterEvals.length);
+        // if this semesters evals is greater than 10 then do a whiskar graph, if the num of evals is less than ten then do a dot graph.
+        extSemName = semester;
+        extSem = semester.replace(/[-:\s]/g, '');
+
+           var jSem =  $("#chart_div").append('<div id='+extSem+' class="singleSemester">&nbsp;</div>');
+
+        if (semesterEvals.length > 10) {
+            extData = CompileChartData(chartData);
+            google.setOnLoadCallback(drawChart());
+        } else {
+            extData = chartData;
+            google.setOnLoadCallback(drawScatter());
+        }
+    });
 }
 
 function drawScatter() {
     var data = new google.visualization.DataTable();
-
     data.addColumn('string', '');
     var evallength = 10;
     for (var i = 0; i < evallength; i++) {
         data.addColumn('number', '');
     }
 
-    var labelArray = getLabels(extData);
+   // var labelArray = getLabels(extData);
 
 
-    labelArray.forEach(function (label) {
         var semester = [];
         extData.forEach(function (eval) {
-            if (label == eval.year + " - " + eval.semesterName) {
-                console.log(eval.score);
+            if (extSemName == eval.year + " - " + eval.semesterName) {
                 if (typeof eval.score == 'string')
                 {
                     eval.score = parseFloat(eval.score);
@@ -39,28 +56,28 @@ function drawScatter() {
                 semester.push(eval.score);
             }
         });
+
         semester.sort();
         for (i = semester.length; i < evallength; i++) {
             semester.push(null);
         }
-        semester.unshift(label);
+        semester.unshift(extSemName);
         data.addRow(semester);
-        console.log(semester);
-    });
 
     //data.addRow(['Fall 2013', 1, null,null]);
     //data.addRow(['Fall 2013', 3, 4,5]);
 
     var options = {
-        width: 900,
-        height: 250,
         legend: 'none',
         orientation: 'vertical',
         colors:['blue'],
-        vAxis: { gridlines: { count: 3 } }
+        vAxis: { gridlines: { count: 3 }},
+        chartArea: {
+            left: 100,
+        }
     };
 
-    var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+    var chart = new google.visualization.ScatterChart(document.getElementById(extSem));
     chart.draw(data, options);
 
     /*document.getElementById('format-select').onchange = function() {
@@ -74,9 +91,12 @@ function drawChart() {
     var data = google.visualization.arrayToDataTable(extData, true);
     var options = {
         legend: 'none',
-        orientation: 'vertical'
+        orientation: 'vertical',
+        chartArea: {
+            left: 100,
+        }
     };
-    var chart = new google.visualization.CandlestickChart(document.getElementById('chart_div'));
+    var chart = new google.visualization.CandlestickChart(document.getElementById(extSem));
     chart.draw(data, options);
 }
 
@@ -118,12 +138,14 @@ function CompileChartData(objArray) {
         var chartData = [needle, min, Q1, Q3, max];
         return chartData;
     }
+
+
     // For each label, take and compile min max and quartiles;
     var chartData = [];
-    labelArray.forEach(function (label) {
-        var semesterData = returnQuartiles(label, objArray);
+
+        var semesterData = returnQuartiles(extSemName, objArray);
         chartData.push(semesterData);
-    });
+
     return chartData;
 }
 //
@@ -168,35 +190,3 @@ function getLabels(objArray) {
     }
     return labelArray;
 }
-
-// i use LoadChart to create the chart -- all of this would be implemented in another file.
-// i am using a temp variable, actually this would be passed in from the generating of the report.
-/*
-var tempData = makeArray();
-loadChart(tempData);
-$(document).ready(function () {
-    generateTable(tempData);
-});
-
-function makeArray() {
-    var objArray = [];
-    var semesterNames = ["", "Spring:", "Summer:", "Fall:"];
-
-    for (var i = 0; i < 9 ; i++) {
-        var randomNum = Math.floor((Math.random() * 3) + 1);
-        var CRNNum = Math.floor((Math.random() * 90000) + 10000);
-        var fancyObj = {
-            crn: CRNNum,
-            score: Math.random() * 4,
-            stddev: (Math.random() * 1.5) + .5,
-            totalRespondents: Math.floor((Math.random() * 20) + 1),
-            semesterNum: randomNum,
-            semesterName: semesterNames[randomNum],
-            className: "CS" + CRNNum,
-            year: Math.floor((Math.random() * 3) + 2013)
-        }
-        objArray.push(fancyObj);
-    }
-    return objArray;
-}
-*/
