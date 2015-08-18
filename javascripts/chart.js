@@ -68,9 +68,6 @@ function drawScatter() {
             semester.push(tooltipText)
         }
     });
-    for (i = semester.length; i < evallength; i++) {
-                semester.push(null);
-            }
 
 semester.unshift(extSemName);
 data.addRow(semester);
@@ -88,7 +85,7 @@ data.addRow(semester);
 
     var chart = new google.visualization.ScatterChart(document.getElementById(extSem));
     chart.draw(data, options);
-
+/*
     google.visualization.events.addListener(chart, 'select', selectHandler);
         function selectHandler() {
           var selection = chart.getSelection();
@@ -111,6 +108,7 @@ data.addRow(semester);
           }
           alert('You selected ' + message);
         }
+        */
 
 
     /*document.getElementById('format-select').onchange = function() {
