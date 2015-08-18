@@ -68,9 +68,7 @@ function drawScatter() {
             semester.push(tooltipText)
         }
     });
-    for (i = semester.length; i < evallength; i++) {
-                semester.push(null);
-            }
+    
 
 semester.unshift(extSemName);
 data.addRow(semester);
