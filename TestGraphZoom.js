@@ -3,7 +3,7 @@ var rightBound = 4.00;
 
 var leftScale = 0.00;
 var rightScale = 4.00;
-var graphObjectArray = new Array();
+var graphObjectArray =  new Array();
 var tableSort = "";
 var tableData = null;
 
