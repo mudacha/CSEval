@@ -70,6 +70,11 @@ h2 {
 	margin-right: auto;
 }
 
+#tabularScores_wrapper{
+	width:72.5%;
+	margin: 0 auto;
+}
+
 #tabularScores tr{
 	text-align:center;
 }
