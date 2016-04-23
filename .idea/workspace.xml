@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="74958bd6-c3f9-49cb-b706-8fa1b9994369" name="Default" comment="" />
+    <list default="true" id="74958bd6-c3f9-49cb-b706-8fa1b9994369" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scatterChart.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TestGraphZoom.html" afterPath="$PROJECT_DIR$/TestGraphZoom.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TestGraphZoom.js" afterPath="$PROJECT_DIR$/TestGraphZoom.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/TestGraphZoom.css" afterPath="$PROJECT_DIR$/css/TestGraphZoom.css" />
+    </list>
     <ignored path="CSEval.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -24,8 +30,42 @@
       <file leaf-file-name="TestGraphZoom.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TestGraphZoom.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.27591974">
-              <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
+            <state relative-caret-position="325">
+              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+              <folding>
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="scatterChart.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scatterChart.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+              <folding>
+                <element signature="n#!!doc;n#getRandomInt#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="license.txt" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/javascripts/canvasjs-1.8.0/license.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TestGraph.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/css/TestGraph.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -34,43 +74,9 @@
       <file leaf-file-name="TestGraphZoom.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TestGraphZoom.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-39.185184">
-              <caret line="128" column="36" selection-start-line="128" selection-start-column="36" selection-end-line="128" selection-end-column="36" />
-              <folding>
-                <marker date="1460958588423" expanded="true" signature="3280:3298" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="3434:3452" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="3577:3738" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="5127:5308" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="5583:5764" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="6151:6332" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="6608:6789" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="7177:7358" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="7633:7814" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="8222:8385" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="8499:8673" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="8938:9127" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="9243:9441" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="9955:10096" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="10409:10563" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="10629:10783" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="10930:11048" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="13044:13062" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="13248:13266" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="13438:13599" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="14819:15000" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="15256:15437" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="15810:15991" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="16256:16437" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="16811:16992" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="17249:17430" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="17820:17983" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="18081:18256" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="18505:18694" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="18794:18993" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="19493:19634" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="19713:19881" placeholder="..." />
-                <marker date="1460958588423" expanded="true" signature="20033:20151" placeholder="..." />
-              </folding>
+            <state relative-caret-position="-404">
+              <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -78,8 +84,8 @@
       <file leaf-file-name="TestGraphZoom.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/TestGraphZoom.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.754717">
-              <caret line="75" column="1" selection-start-line="75" selection-start-column="1" selection-end-line="75" selection-end-column="1" />
+            <state relative-caret-position="435">
+              <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -87,15 +93,23 @@
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/TestGraphZoom.html" />
         <option value="$PROJECT_DIR$/TestGraphZoom.js" />
         <option value="$PROJECT_DIR$/css/TestGraphZoom.css" />
+        <option value="$PROJECT_DIR$/scatterChart.js" />
+        <option value="$PROJECT_DIR$/TestGraphZoom.html" />
       </list>
     </option>
   </component>
@@ -105,10 +119,10 @@
     <detection-done>true</detection-done>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1382" />
-    <option name="height" value="784" />
+    <option name="x" value="-9" />
+    <option name="y" value="-9" />
+    <option name="width" value="1938" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -179,6 +193,46 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canvasjs-1.8.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CSEval" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CSEval" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="canvasjs-1.8.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="source" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CSEval" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="CSEval" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -200,7 +254,9 @@
     <configuration default="true" type="DartTestRunConfigurationType" factoryName="Dart Test">
       <method />
     </configuration>
-    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" config-file="">
+    <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma">
+      <config-file value="" />
+      <node-interpreter value="project" />
       <envs />
       <method />
     </configuration>
@@ -217,6 +273,7 @@
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
+      <node-interpreter>project</node-interpreter>
       <node-options />
       <gulpfile />
       <tasks />
@@ -227,10 +284,12 @@
     <configuration default="true" type="js.build_tools.npm" factoryName="npm">
       <command value="run-script" />
       <scripts />
+      <node-interpreter value="project" />
       <envs />
       <method />
     </configuration>
     <configuration default="true" type="mocha-javascript-test-runner" factoryName="Mocha">
+      <node-interpreter>C:/Program Files/nodejs/node.exe</node-interpreter>
       <node-options />
       <working-directory>$PROJECT_DIR$</working-directory>
       <pass-parent-env>true</pass-parent-env>
@@ -243,40 +302,44 @@
       <method />
     </configuration>
   </component>
-  <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="74958bd6-c3f9-49cb-b706-8fa1b9994369" name="Default" comment="" />
       <created>1460389542573</created>
       <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
       <updated>1460389542573</updated>
       <workItem from="1460389544633" duration="329000" />
+      <workItem from="1461453684040" duration="1771000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="329000" />
+    <option name="totallyTimeSpent" value="2100000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="784" extended-state="7" />
+    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17760417" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3293919" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -289,159 +352,125 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/TestGraphZoom.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
-          <folding />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TestGraphZoom.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1460958588423" expanded="true" signature="3280:3298" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="3434:3452" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="3577:3738" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="5127:5308" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="5583:5764" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="6151:6332" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="6608:6789" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="7177:7358" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="7633:7814" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="8222:8385" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="8499:8673" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="8938:9127" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="9243:9441" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="9955:10096" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="10409:10563" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="10629:10783" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="10930:11048" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="13044:13062" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="13248:13266" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="13438:13599" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="14819:15000" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="15256:15437" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="15810:15991" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="16256:16437" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="16811:16992" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="17249:17430" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="17820:17983" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="18081:18256" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="18505:18694" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="18794:18993" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="19493:19634" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="19713:19881" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="20033:20151" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TestGraphZoom.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+        <state relative-caret-position="2816">
+          <caret line="128" column="36" selection-start-line="128" selection-start-column="36" selection-end-line="128" selection-end-column="36" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TestGraphZoom.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1460958588423" expanded="true" signature="3280:3298" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="3434:3452" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="3577:3738" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="5127:5308" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="5583:5764" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="6151:6332" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="6608:6789" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="7177:7358" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="7633:7814" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="8222:8385" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="8499:8673" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="8938:9127" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="9243:9441" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="9955:10096" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="10409:10563" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="10629:10783" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="10930:11048" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="13044:13062" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="13248:13266" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="13438:13599" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="14819:15000" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="15256:15437" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="15810:15991" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="16256:16437" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="16811:16992" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="17249:17430" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="17820:17983" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="18081:18256" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="18505:18694" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="18794:18993" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="19493:19634" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="19713:19881" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="20033:20151" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/TestGraphZoom.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.754717">
+        <state relative-caret-position="1650">
           <caret line="75" column="1" selection-start-line="75" selection-start-column="1" selection-end-line="75" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TestGraphZoom.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TestGraphZoom.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TestGraphZoom.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TestGraphZoom.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/TestGraph.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/TestGraphZoom.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TestGraphZoom.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-39.185184">
-          <caret line="128" column="36" selection-start-line="128" selection-start-column="36" selection-end-line="128" selection-end-column="36" />
+        <state relative-caret-position="-404">
+          <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascripts/canvasjs-1.8.0/canvasjs.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <marker date="1460958588423" expanded="true" signature="3280:3298" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="3434:3452" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="3577:3738" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="5127:5308" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="5583:5764" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="6151:6332" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="6608:6789" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="7177:7358" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="7633:7814" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="8222:8385" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="8499:8673" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="8938:9127" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="9243:9441" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="9955:10096" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="10409:10563" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="10629:10783" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="10930:11048" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="13044:13062" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="13248:13266" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="13438:13599" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="14819:15000" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="15256:15437" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="15810:15991" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="16256:16437" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="16811:16992" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="17249:17430" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="17820:17983" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="18081:18256" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="18505:18694" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="18794:18993" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="19493:19634" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="19713:19881" placeholder="..." />
-            <marker date="1460958588423" expanded="true" signature="20033:20151" placeholder="..." />
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/javascripts/canvasjs-1.8.0/license.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scatterChart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+          <folding>
+            <element signature="n#!!doc;n#getRandomInt#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/TestGraphZoom.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27591974">
-          <caret line="20" column="19" selection-start-line="20" selection-start-column="19" selection-end-line="20" selection-end-column="19" />
-          <folding />
+        <state relative-caret-position="325">
+          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

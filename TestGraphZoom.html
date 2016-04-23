@@ -10,7 +10,8 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
   <script type="text/javascript" src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
   <script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-  
+    <script type="text/javascript" src="javascripts/canvasjs-1.8.0/canvasjs.min.js"></script>
+  <script type="text/javascript" src="scatterChart.js"></script>
   <script type="text/javascript" src="TestGraphZoom.js"></script>
     <script src="javascripts/slides.min.jquery.js"></script>
   
@@ -19,35 +20,13 @@
 <body onload="startGraph();" >
 
     <div id="page">
-        <h2>Computer Science CS 1400 to CS 2400</h2>
 
-        
 
-        <table class='tablegraph' id='tableid' align="center">
-            <tr></tr>
-            <tr id='mainrow' align='center'></tr>
-            <tr></tr>
 
-        </table>
-        <table align='center'>
-            <tr>
-                <td colspan='9'><input type='image' src='images/Arrows-Back-icon.png' width='20px' height='20px' onmousedown=leftClick() onmouseup=endLeftClick() ondragend=endLeftClick() id='leftclick' /></td>
-                <td><input type='image' src='images/Very-Basic-Plus-icon.png' width='20px' height='20px' onmousedown=zoomIn() onmouseup=endZoomIn() ondragend=endZoomIn() id='zoomin' /></td>
-                <td><input type='image' src='images/Very-Basic-Minus-icon.png' width='20px' height='20px' onmousedown=zoomOut() onmouseup=endZoomOut() ondragend=endZoomOut() id='zoomout' /></td>
-                <td><input type='image' src='images/Arrows-Back-greater-than.png' width='20px' height='20px' onmousedown=rightClick() onmouseup=endRightClick() ondragend=endRightClick() id='rightclick' /></td>
+        <div class='tablegraph' id='tableid' align="center">
+            <div id="chartContainer" style=" height: 300px; width: 100%;">
 
-            </tr>
-        </table>
-
-        <table align='center'>
-            <tr>
-                <td colspan='9' width='900px'>Legend:</td>
-                 <tr><td class="legendrow"><img src='images/LegendSquare-Red.png' />Sections you teach.</td></tr>
-                <tr><td class='legendrow'><img src='images/LegendSquare-Green.png' />Other sections you can view.</td></tr>
-                <tr><td class="legendrow"><img src='images/LegendSquare-Blue.png' />Sections you cannot view.</td></tr>
-            </tr>
-            
-        </table>
+        </div>
 
         <table id="tabularScores" class="display" cellspacing="0" width="100%"></table>
     </div>
