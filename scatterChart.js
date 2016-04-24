@@ -29,13 +29,13 @@ function generateDummyData() {
     var triangleObj = {
         type: "scatter",
         markerType: "triangle",
-        toolTipContent: "<span style='\"'color: {color};'\"'><strong>{name}</strong></span><br/><strong> Score</strong> {x} <br/><strong> Year</strong> {y}<br/><strong>Semester</strong> {SemesterVal}<br/><strong>Course</strong> {course}</span>",
+        toolTipContent: "<span style='\"'color: {color};'\"'><strong>{name}</strong></span><br/><strong> Score</strong> {x} <br/><strong> Year</strong> {y}<br/><strong>Semester</strong> {SemesterVal}<br/></span>",
         name: "Sections you cannot view",
         showInLegend: true,
         dataPoints: []
     };
 
-    for (var i = 0; i < 1000; i++) {
+    for (var i = 0; i < 100; i++) {
         var tempScore = parseFloat((Math.random() * 4).toFixed(2));
 
 
@@ -95,7 +95,7 @@ function generateDummyData() {
                 y: year,
                 SemesterVal: randSemester(),
                 Professor: randProfessor(),
-                course: "CS 1400"
+                course: "CS 2420"
 
             })
         }
