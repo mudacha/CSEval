@@ -4,40 +4,6 @@ var graphObjectArray = [];
 
 function startGraph()
 {
-	//$.ajax(
-	//{
-	//    //url: '/misc/weber/CSEvals/ranking.cfm',
-	//    url: 'Ranking.cshtml?instructorID=887999808&semester=2&year=2014',
-	//	type: "GET",
-	//	dataType: "json",
-	//	success:function(data)
-	//	{
-	//		var dataArray;
-	//		var tableObject;
-
-	//		$.each(data.DATA, function(i, array)
-	//		{
-	//			dataArray = toKeyValPair(data.COLUMNS, array);	//CONVERTS DATA TO A KEY VALUE PAIR FOR READABILITY
-	//			tableObject = {marker:dataArray["MARKER"], course:dataArray["COURSE"], instructor:dataArray["INAME"], score:dataArray["INSTRUCTORAVERAGE"], semester:dataArray["SEMESTER"],year:dataArray["YEAR"]};
-	//			graphObjectArray.push(tableObject);
-	//		});
-
-	//		graphObjectArray.sort(function (a, b) {
-	//		    return a.score - b.score;
-	//		})
-
-	//		barGraph();
-
-	//		tableData = graphObjectArray;
-
-	//		graphObjectArray.sort(function (a, b) {
-	//		    return b.score - a.score;
-	//		});
-	//		generateScoreTable(graphObjectArray);
-	//	}
-	//});
-
-	//var graphObjectArray = new Array();//[graphObject, graphObject2, graphObject3, graphObject4, graphObject5, graphObject6, graphObject7, graphObject8, graphObject9];
 	
 	//generate random markers to use as mock data.
 	for (var i = 0; i < 100; i++)
