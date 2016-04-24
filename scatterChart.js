@@ -119,18 +119,21 @@ window.onload = function () {
                 animationEnabled: true,
                 axisX: {
                     title: "Rating",
-                    titleFontSize: 18
+                    titleFontSize: 20,
+                    minimum: 0,
+                    maximum: 4
 
                 },
                 axisY: {
                     title: "Year",
-                    titleFontSize: 16,
+                    titleFontSize: 20,
                     minimum: 2010,
                     maximum: 2020
                 },
                 legend: {
                     verticalAlign: 'bottom',
-                    horizontalAlign: "center"
+                    horizontalAlign: "center",
+
                 },
 
                 data: generateDummyData()

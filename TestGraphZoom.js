@@ -40,7 +40,7 @@ function startGraph()
 	//var graphObjectArray = new Array();//[graphObject, graphObject2, graphObject3, graphObject4, graphObject5, graphObject6, graphObject7, graphObject8, graphObject9];
 	
 	//generate random markers to use as mock data.
-	for (var i = 0; i < 10; i++)
+	for (var i = 0; i < 100; i++)
 	{
 		var tempScore = (Math.random() * 4).toFixed(2);
 		var tempMarker;
@@ -94,7 +94,7 @@ function startGraph()
 
 function objectToArr(tableValues) {
 	var dataSet = [];
-	for (i = 0; i < 10; i++) {
+	for (var i = 0; i < 100; i++) {
 		dataSet[i] = [tableValues[i].marker, tableValues[i].course,tableValues[i].instructor,tableValues[i].semester,tableValues[i].year,tableValues[i].score];
 	}
 	buildTable(dataSet);
