@@ -69,10 +69,11 @@ h2 {
 	margin-left: auto;
 	margin-right: auto;
 }
-
-#tabularScores_wrapper{
-	width:72.5%;
-	margin: 0 auto;
+table {
+	border: thin solid black;
+}
+th, td {
+	border: thin solid black;
 }
 
 #tabularScores tr{
